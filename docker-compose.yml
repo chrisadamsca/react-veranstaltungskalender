@@ -9,8 +9,8 @@ services:
     command: npm start
   mongo:
     image: mongo
-  test:
-    build: .
-    volumes:
-      - ./:/app
-    command: npm test
+  # test:
+  #   build: .
+  #   volumes:
+  #     - ./:/app
+  #   command: npm test
