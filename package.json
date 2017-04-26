@@ -1,19 +1,20 @@
 {
-  "name": "reactjs-basics",
+  "name": "events",
   "version": "1.0.0",
-  "description": "Some basic ReactJS",
-  "main": "index.js",
+  "description": "Die beste Event-App",
+  "main": "server.js",
   "scripts": {
     "start": "npm run build",
-    "build": "webpack -d && cp src/index.html dist/index.html && node app.js",
+    "build": "webpack -d && cp -R src/ dist/ && node dist/server.js",
     "build:prod": "webpack -p && cp src/index.html dist/index.html"
   },
   "keywords": [
     "reactJS"
   ],
-  "author": "Patrick Kuhnle",
+  "author": "Antony Nghiem, Christopher Adams, Patrick Kuhnle",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.15.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
