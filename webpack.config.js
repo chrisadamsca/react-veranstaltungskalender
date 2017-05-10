@@ -1,26 +1,75 @@
-var path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var DIST_DIR = path.resolve (__dirname, "dist");
-var SRC_DIR = path.resolve (__dirname, "src");
+const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: __dirname + '/app/index.html',
+  filename: 'index.html',
+  inject: 'body',
+});
 
-var config = {
-  entry: SRC_DIR + "/app-client.js",
-  output: {
-    path: DIST_DIR + "/static",
-    filename: "bundle.js"
+module.exports = {
+  context: __dirname + '/app',
+
+  entry: {
+    javascript: './js/app.js',
   },
+
+  output: {
+    filename: 'app.js',
+    path: __dirname + '/dist',
+  },
+
+  resolve: {
+    extensions: ['*', '.js', '.jsx', '.json'],
+  },
+
+  devtool: 'inline-source-map',
+
   module: {
     rules: [
       {
-        test: /\js?/,
-        include: SRC_DIR,
-        loader: "babel-loader",
-        query: {
-          presets: ["es2015", "react", "stage-2"]
-        }
-      }
-    ]
-  }
-}
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loaders: ['babel-loader'],
+      },
+      // {
+      //   test: /\.sass$/,
+      //   use: [{
+      //     loader: 'style-loader',
+      //   }, {
+      //     loader: 'css-loader',
+      //   }, {
+      //     loader: 'sass-loader',
+      //   },
+      //   ],
+      // },
 
-module.exports = config;
+      {
+        test: /\.sass$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => {
+                return [
+                  require('autoprefixer')({ browsers: '> 3%' }),
+                ];
+              },
+            },
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
+      },
+    ],
+  },
+
+  plugins: [HTMLWebpackPluginConfig],
+
+};
