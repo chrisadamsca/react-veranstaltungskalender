@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "dev": "concurrently --kill-others \"node server.js\" \"webpack --watch\" "
   },
   "author": "",

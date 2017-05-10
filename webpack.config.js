@@ -31,18 +31,6 @@ module.exports = {
         exclude: /node_modules/,
         loaders: ['babel-loader'],
       },
-      // {
-      //   test: /\.sass$/,
-      //   use: [{
-      //     loader: 'style-loader',
-      //   }, {
-      //     loader: 'css-loader',
-      //   }, {
-      //     loader: 'sass-loader',
-      //   },
-      //   ],
-      // },
-
       {
         test: /\.sass$/,
         use: [
