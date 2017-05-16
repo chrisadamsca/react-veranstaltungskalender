@@ -1,13 +1,16 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
+const autoprefixer = require('autoprefixer');
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: __dirname + '/app/index.html',
+  template: path.join(__dirname, '/app/index.html'),
   filename: 'index.html',
   inject: 'body',
 });
 
 module.exports = {
-  context: __dirname + '/app',
+  context: path.join(__dirname, '/app'),
 
   entry: {
     javascript: './js/app.js',
@@ -15,7 +18,7 @@ module.exports = {
 
   output: {
     filename: 'app.js',
-    path: __dirname + '/dist',
+    path: path.join(__dirname, '/dist'),
   },
 
   resolve: {
@@ -43,11 +46,7 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => {
-                return [
-                  require('autoprefixer')({ browsers: '> 3%' }),
-                ];
-              },
+              plugins: () => [autoprefixer({ browsers: '> 3%' })],
             },
           },
           {
