@@ -13,5 +13,4 @@ const App = ({ children }) => (
   </MuiThemeProvider>
 );
 
-
 export default App;
