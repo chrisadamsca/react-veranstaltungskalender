@@ -7,7 +7,9 @@ const App = ({ children }) => (
   <MuiThemeProvider>
     <div className='App'>
       <AppBar />
-      { children }
+      <div className='content-wrapper'>
+        { children }
+      </div>
       <NavBar />
     </div>
   </MuiThemeProvider>
