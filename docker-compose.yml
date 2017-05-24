@@ -13,3 +13,4 @@ web:
     - .:/app
   links:
     - db
+  tty: true
