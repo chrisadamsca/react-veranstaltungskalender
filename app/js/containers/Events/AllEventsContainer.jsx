@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EventList from '../../components/Events/EventList';
+import AllEventList from '../../components/Events/AllEvents';
 
 // This is a placeholder for a real request
 const fetchSomeEvents = cb =>
@@ -9,7 +9,7 @@ const fetchSomeEvents = cb =>
     { id: '0003', title: 'Event 3', desc: 'I know, right?!' },
   ]);
 
-export default class EventListContainer extends Component {
+export default class AllEventListContainer extends Component {
   constructor() {
     super();
     this.state = { events: [] };
@@ -20,7 +20,7 @@ export default class EventListContainer extends Component {
   }
   render() {
     return (
-      <EventList events={ this.state.events } />
+      <AllEventList events={ this.state.events } />
     );
   }
 }
