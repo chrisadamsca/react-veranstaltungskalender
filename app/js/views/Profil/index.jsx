@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from 'react-router';
 
-export default class Profil extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Mein Profil:</h1>
-      </div>
-    );
-  }
-}
+const Profil = () => (
+  <div>
+    <h1>Mein Profil:</h1>
+    <Link to='/login'>Log in</Link>
+    <Link to='/signup'>Sign up</Link>
+  </div>
+);
+
+export default Profil;
