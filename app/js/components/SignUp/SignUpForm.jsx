@@ -11,9 +11,9 @@ const SignUpForm = ({
   errors,
   user,
 }) => (
-  <Card className='container'>
+  <Card className='container form-container'>
     <form action='/' onSubmit={ onSubmit }>
-      <h2 className='card-heading'>Sign Up</h2>
+      <h2 className='card-heading'>Registrieren</h2>
 
       {errors.summary && <p className='error-message'>{errors.summary}</p>}
 
@@ -49,10 +49,10 @@ const SignUpForm = ({
       </div>
 
       <div className='button-line'>
-        <RaisedButton type='submit' label='Registrieren' />
+        <RaisedButton type='submit' label='Registrieren' primary />
       </div>
 
-      <CardText>Du hast schon einen Account? <Link to={ '/login' }>Einloggen</Link></CardText>
+      <CardText>Du hast schon einen Account? <br/><Link to={ '/login' }>Einloggen</Link></CardText>
     </form>
   </Card>
 );

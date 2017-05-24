@@ -12,7 +12,7 @@ const LoginForm = ({
   user }) => (
     <Card className='container form-container'>
       <form action='/' onSubmit={ onSubmit }>
-        <h2 className='card-heading'>Login</h2>
+        <h2 className='card-heading'>Einloggen</h2>
 
         {errors.summary && <p className='error-message'>{errors.summary}</p>}
 
@@ -38,10 +38,10 @@ const LoginForm = ({
         </div>
 
         <div className='button-line'>
-          <RaisedButton type='submit' label='Einloggen' />
+          <RaisedButton type='submit' label='Einloggen' primary />
         </div>
 
-        <CardText>Du hast noch keinen Account? <Link to={ '/signup' }>Registrieren</Link></CardText>
+        <CardText>Du hast noch keinen Account? <br/><Link to={ '/signup' }>Registrieren</Link></CardText>
       </form>
     </Card>
 );

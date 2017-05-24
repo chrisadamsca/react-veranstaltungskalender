@@ -3,7 +3,6 @@ import SignUpContainer from '../../containers/SignUp/SignUpContainer';
 
 const SignUp = () => (
   <div>
-    <h1>SignUp:</h1>
     <SignUpContainer />
   </div>
 );
