@@ -7,10 +7,15 @@ export default class Events extends Component {
   render() {
     return (
       <div className='app-body'>
-        <h1 className='tile'>Meine Events:</h1>
-        <UserEventListContainer />
-        <h1 className="tile">Alle Events:</h1>
-        <AllEventListContainer />
+        <div className='card-container'>
+          <h1 className='cardsHeader'>Meine Events:</h1>
+          <UserEventListContainer />
+        </div>
+
+        <div className='card-container'>
+          <h1 className='cardsHeader'>Alle Events:</h1>
+          <AllEventListContainer />
+        </div>
       </div>
     );
   }

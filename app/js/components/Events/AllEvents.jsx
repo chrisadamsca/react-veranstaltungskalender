@@ -1,11 +1,15 @@
 import React from 'react';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 const AllEventList = props => (
-  <ul className='tile-list'>
+  <div className='cards'>
     {props.events.map(event => (
-      <li key={ event.id } className='tile'>{event.title}</li>
+      <Card key={ event.id } className='card'>
+        <CardTitle title={ event.title } />
+        <CardText>{ event.desc }</CardText>
+      </Card>
     ))}
-  </ul>
+  </div>
 );
 
 export default AllEventList;
