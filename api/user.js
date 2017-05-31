@@ -1,7 +1,9 @@
 const User = require('../models/user');
 const Group = require('../models/groups');
 
-module.exports.createNewUser = (req, res) => {
+
+// Create User
+module.exports.createUser = (req, res) => {
   const data = req.body;
 
   if (data === undefined || data.length === 0) {
@@ -23,7 +25,9 @@ module.exports.createNewUser = (req, res) => {
   });
 };
 
-module.exports.returnUser = (req, res) => {
+
+// Get User
+module.exports.getUser = (req, res) => {
   const data = req.params;
   if (data === undefined || data.length === 0) {
     res.status(400).send('Es wurden keine Daten gesendet');
@@ -42,7 +46,16 @@ module.exports.returnUser = (req, res) => {
   });
 };
 
-module.exports.addUserToGroup = (req, res) => {
+// Get User
+module.exports.getAllUsers = () => {
+  User.find((err, users) => {
+    console.log(users);
+    return null;
+  });
+};
+
+// Update User
+module.exports.updateUser = (req, res) => {
   const data = req.params;
   Group.findById((data.gId), (err, group) => {
     if (err) {
@@ -65,12 +78,15 @@ module.exports.addUserToGroup = (req, res) => {
   });
 };
 
+// Login User
+module.exports.loginUser = (req, res) => {
+  const data = req.body;
+  const hashedPassword = data.password;
 
-module.exports.getAllUsers = () => {
-  User.find((err, users) => {
-    if (err) return console.error(err);
-    console.log('User:');
-    console.log(users);
-    return null;
+  User.findOne({ email: data.email, password: hashedPassword }, (err, user) => {
+    if (err) {
+      res.status(400).send('Es ist ein Fehler aufgetreten');
+    }
+    res.status(200).send(user._id);
   });
 };
