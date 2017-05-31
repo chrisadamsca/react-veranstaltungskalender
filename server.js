@@ -32,8 +32,12 @@ mongodb.once('open', () => {
 
 // ROUTING
 const authRoutes = require('./routes/user');
+const groupRoutes = require('./routes/group');
+const eventRoutes = require('./routes/event');
 
 app.use('/api/user', authRoutes);
+app.use('/api/group', groupRoutes);
+app.use('/api/event', eventRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
