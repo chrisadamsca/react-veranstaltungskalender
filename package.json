@@ -36,11 +36,14 @@
     "webpack": "^2.4.1"
   },
   "dependencies": {
-    "bcrypt": "^1.0.2",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.2",
+    "jsonwebtoken": "^7.4.1",
     "material-ui": "^0.18.1",
-    "mongoose": "^4.10.2",
+    "mongoose": "^4.10.4",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

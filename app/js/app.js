@@ -9,7 +9,7 @@ import Profil from './views/Profil';
 import Login from './views/Login';
 import SignUp from './views/SignUp';
 import '../sass/app.sass';
-
+import Auth from './modules/Auth';
 
 ReactDOM.render(
   <Router history={ browserHistory }>

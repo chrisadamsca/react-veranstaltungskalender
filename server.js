@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const app = express();
 
@@ -30,10 +31,29 @@ mongodb.once('open', () => {
   console.log('connection to mongodb established');
 });
 
-// ROUTING
-const authRoutes = require('./routes/user');
+// pass the passport middleware
+app.use(passport.initialize());
 
-app.use('/api/user', authRoutes);
+// load passport strategies
+const localSignupStrategy = require('./passport/local-signup');
+const localLoginStrategy = require('./passport/local-login');
+passport.use('local-signup', localSignupStrategy);
+passport.use('local-login', localLoginStrategy);
+
+const authCheckMiddleware = require('./middleware/auth-check');
+
+app.use('/api/auth/mw', authCheckMiddleware);
+
+// ROUTING
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const groupRoutes = require('./routes/group');
+const eventRoutes = require('./routes/event');
+
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/group', groupRoutes);
+app.use('/api/event', eventRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
