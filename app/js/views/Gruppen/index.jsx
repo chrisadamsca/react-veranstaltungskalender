@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import GroupList from '../../components/Groups/GroupList';
+import AllGroupsContainer from '../../containers/Groups/AllGroupsContainer';
+import UserGroupsContainer from '../../containers/Groups/UserGroupsContainer';
 
 export default class Events extends Component {
   render() {
     return (
       <div className='app-body'>
-        <h1 className='tile'>Meine Gruppen:</h1>
-        <GroupList />
+        <div className='card-container'>
+          <h1 className='cardsHeader'>Deine Gruppen:</h1>
+          <UserGroupsContainer />
+        </div>
+
+        <div className='card-container'>
+          <h1 className='cardsHeader'>Alle Gruppen:</h1>
+          <AllGroupsContainer />
+        </div>
       </div>
     );
   }
