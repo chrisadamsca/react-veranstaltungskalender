@@ -3,21 +3,30 @@ const group = require('../api/group');
 
 const router = new express.Router();
 
-router.get('/getGroups', (req, res) => {
+// new group: name, imagePath, userId
+router.post('/', (req, res) => {
+  group.createNewGroup(req, res);
+});
+
+// Get  all Groups
+router.get('/', (req, res) => {
   group.getAllGroups(req, res);
 });
 
-router.get('/getGroupById/:gId', (req, res) => {
+// Get Group by ID
+router.get('/:gId', (req, res) => {
   group.returnGroup(req, res);
 });
 
-router.get('/addUserToGroup/:userId/:gId', (req, res) => {
-  group.addUserToGroup(req, res);
+// Update Group Data
+router.put('/:gId', (req, res) => {
+  group.updateGroup(req, res);
 });
 
-// new group: name, imagePath, userId
-router.post('/', (req, res) => {
-  group.createNewUser(req, res);
+// Delete User
+router.delete('/:gId', (req, res) => {
+  group.deleteGroup(req, res);
 });
+
 
 module.exports = router;
