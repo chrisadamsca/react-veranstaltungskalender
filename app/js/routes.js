@@ -30,7 +30,13 @@ const routes = {
 
     {
       path: '/profil',
-      component: Profil
+      getComponent: (location, callback) => {
+        if (Auth.isUserAuthenticated()) {
+          callback(null, Profil);
+        } else {
+          callback(null, Login);
+        }
+      }
     },
 
     {
@@ -47,7 +53,7 @@ const routes = {
       path: '/logout',
       onEnter: (nextState, replace) => {
         Auth.deauthenticateUser();
-
+        localStorage.setItem('currentUser', '');
         // change the current URL to /
         replace('/');
       }

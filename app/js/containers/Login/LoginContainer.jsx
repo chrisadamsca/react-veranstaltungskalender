@@ -1,4 +1,6 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
+import Auth from '../../modules/Auth';
 import LoginForm from '../../components/Login/LoginForm';
 
 class LoginContainer extends React.Component {
@@ -6,12 +8,21 @@ class LoginContainer extends React.Component {
   /**
    * Class constructor.
    */
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
+
+    const storedMessage = localStorage.getItem('successMessage');
+    let successMessage = '';
+
+    if (storedMessage) {
+      successMessage = storedMessage;
+      localStorage.removeItem('successMessage');
+    }
 
     // set the initial component state
     this.state = {
       errors: {},
+      successMessage,
       user: {
         email: '',
         password: '',
@@ -50,7 +61,14 @@ class LoginContainer extends React.Component {
           errors: {},
         });
 
-        console.log('The form is valid');
+        // save the token
+        Auth.authenticateUser(xhr.response.token);
+
+        // Speichere den eingeloggten User im LocalStorage
+        localStorage.setItem('currentUser', JSON.stringify(xhr.response.user));
+
+        // Weiterleiten
+        browserHistory.push('/profil');
       } else {
         // failure
 
@@ -64,9 +82,6 @@ class LoginContainer extends React.Component {
       }
     });
     xhr.send(formData);
-
-    console.log('email:', this.state.user.email);
-    console.log('password:', this.state.user.password);
   }
 
   /**
@@ -93,6 +108,7 @@ class LoginContainer extends React.Component {
         onSubmit={ this.processForm }
         onChange={ this.changeUser }
         errors={ this.state.errors }
+        successMessage={ this.state.successMessage }
         user={ this.state.user }
       />
     );

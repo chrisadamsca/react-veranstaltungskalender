@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import SignUpForm from '../../components/SignUp/SignUpForm';
 
 class SignUpContainer extends React.Component {
@@ -6,8 +7,8 @@ class SignUpContainer extends React.Component {
   /**
    * Class constructor.
    */
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     // set the initial component state
     this.state = {
@@ -21,21 +22,6 @@ class SignUpContainer extends React.Component {
 
     this.processForm = this.processForm.bind(this);
     this.changeUser = this.changeUser.bind(this);
-  }
-
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
-  changeUser(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user,
-    });
   }
 
   /**
@@ -67,7 +53,11 @@ class SignUpContainer extends React.Component {
           errors: {},
         });
 
-        console.log('The form is valid');
+        // set a message
+        localStorage.setItem('successMessage', xhr.response.message);
+
+        // make a redirect
+        browserHistory.push('/login');
       } else {
         // failure
 
@@ -80,10 +70,21 @@ class SignUpContainer extends React.Component {
       }
     });
     xhr.send(formData);
+  }
 
-    console.log('name:', this.state.user.name);
-    console.log('email:', this.state.user.email);
-    console.log('password:', this.state.user.password);
+  /**
+    * Change the user object.
+    *
+    * @param {object} event - the JavaScript event object
+    */
+  changeUser(event) {
+    const field = event.target.name;
+    const user = this.state.user;
+    user[field] = event.target.value;
+
+    this.setState({
+      user,
+    });
   }
 
   /**
