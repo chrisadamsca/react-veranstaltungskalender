@@ -11,8 +11,33 @@ class OtherGroups extends Component {
   componentDidMount() {
   }
 
-  enterGroup() {
-    console.log("Enter group");
+  enterGroup(gId) {
+    // HTTP Message:
+    const httpMessage = 'gId=' + gId;
+
+    // AJAX-Request
+    const xhr = new XMLHttpRequest();
+    xhr.open('put', '/api/user/' + JSON.parse(localStorage.getItem('currentUser')).userID);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.responseType = 'json';
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 200) {
+        // ERFOLG:
+
+        // Entferne alle Fehler aus dem State
+        this.setState({
+          // errors: {},
+        });
+      } else {
+        // FEHLER:
+
+        // Setze den Fehler im State
+        this.setState({
+          error: 'Es ist etwas schiefgelaufen :(',
+        });
+      }
+    });
+    xhr.send(httpMessage);
   }
 
   render() {
@@ -22,7 +47,7 @@ class OtherGroups extends Component {
           <Card key={ group._id } className='card'>
             <CardTitle title={ group.name } />
             <CardText>{ group.description }</CardText>
-            <IconButton onTouchTap={ this.enterGroup }>
+            <IconButton onTouchTap={ () => this.enterGroup(group._id) } >
               <FontIcon className='material-icons'>add_box</FontIcon>
             </IconButton>
           </Card>
