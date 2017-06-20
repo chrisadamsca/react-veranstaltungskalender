@@ -1,6 +1,7 @@
 import App from './views/App';
 import Events from './views/Events';
 import Gruppen from './views/Gruppen';
+import GruppeErstellen from './views/Gruppen/GruppeErstellen';
 import Profil from './views/Profil';
 import Login from './views/Login';
 import SignUp from './views/SignUp';
@@ -25,9 +26,17 @@ const routes = {
 
     {
       path: '/gruppen',
-      component: Gruppen
+      component: Gruppen,
     },
-
+    {
+      path: '/gruppeerstellen',
+      component: GruppeErstellen,
+      onEnter: (nextState, replace) => {
+        if (!Auth.isUserAuthenticated()) {
+          replace('/login');
+        }
+      },
+    },
     {
       path: '/profil',
       getComponent: (location, callback) => {

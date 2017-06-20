@@ -20,6 +20,7 @@ router.get('/:gId', (req, res) => {
 
 // Update Group Data
 router.put('/:gId', (req, res) => {
+  console.log('11111111oijasd');
   group.updateGroup(req, res);
 });
 
