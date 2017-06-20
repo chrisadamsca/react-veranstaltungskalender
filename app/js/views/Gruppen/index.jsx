@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Link, IndexLink } from 'react-router';
 import AllGroupsContainer from '../../containers/Groups/AllGroupsContainer';
 import UserGroupsContainer from '../../containers/Groups/UserGroupsContainer';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export default class Events extends Component {
   render() {
@@ -15,6 +18,12 @@ export default class Events extends Component {
           <h1 className='cardsHeader'>Andere Gruppen:</h1>
           <AllGroupsContainer />
         </div>
+
+        <Link to='/gruppeerstellen' activeClassName='active'>
+          <FloatingActionButton className='floatingButton'>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Link>
       </div>
     );
   }
