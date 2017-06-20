@@ -1,4 +1,6 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
+import Auth from '../../modules/Auth';
 import LoginForm from '../../components/Login/LoginForm';
 
 class LoginContainer extends React.Component {
@@ -6,12 +8,21 @@ class LoginContainer extends React.Component {
   /**
    * Class constructor.
    */
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
+
+    const storedMessage = localStorage.getItem('successMessage');
+    let successMessage = '';
+
+    if (storedMessage) {
+      successMessage = storedMessage;
+      localStorage.removeItem('successMessage');
+    }
 
     // set the initial component state
     this.state = {
       errors: {},
+      successMessage,
       user: {
         email: '',
         password: '',
@@ -28,33 +39,39 @@ class LoginContainer extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    // create a string for an HTTP body message
+    // HTTP Message:
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
-    const formData = `email=${email}&password=${password}`;
+    const httpMessage = 'email=' + email + '&password=' + password;
 
-    // create an AJAX request
+    // AJAX-Request
     const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/login');
+    xhr.open('post', '/api/auth/login');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
-        // success
+        // ERFOLG:
 
-        // change the component-container state
+        // Entferne alle Fehler aus dem State
         this.setState({
           errors: {},
         });
 
-        console.log('The form is valid');
-      } else {
-        // failure
+        // Speichere den Token
+        Auth.authenticateUser(xhr.response.token);
 
-        // change the component state
+        // Speichere den eingeloggten User im LocalStorage
+        localStorage.setItem('currentUser', JSON.stringify(xhr.response.user));
+
+        // Weiterleiten
+        browserHistory.push('/profil');
+      } else {
+        // FEHLER:
+
+        // Setze den Fehler im State
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
 
@@ -63,10 +80,7 @@ class LoginContainer extends React.Component {
         });
       }
     });
-    xhr.send(formData);
-
-    console.log('email:', this.state.user.email);
-    console.log('password:', this.state.user.password);
+    xhr.send(httpMessage);
   }
 
   /**
@@ -93,6 +107,7 @@ class LoginContainer extends React.Component {
         onSubmit={ this.processForm }
         onChange={ this.changeUser }
         errors={ this.state.errors }
+        successMessage={ this.state.successMessage }
         user={ this.state.user }
       />
     );

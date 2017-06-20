@@ -4,16 +4,33 @@ import muiTheme from '../../config/mui-custom-theme';
 import AppBar from '../../components/Global/AppBar';
 import NavBar from '../../components/Global/NavBar';
 
-const App = ({ children }) => (
-  <MuiThemeProvider muiTheme={ muiTheme }>
-    <div className='App'>
-      <AppBar />
-      <div className='content-wrapper'>
-        { children }
-      </div>
-      <NavBar />
-    </div>
-  </MuiThemeProvider>
-);
+class App extends React.Component {
+
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={ muiTheme }>
+        <div className='App'>
+          <AppBar />
+          <div className='content-wrapper'>
+            { this.props.children }
+          </div>
+          <NavBar />
+        </div>
+      </MuiThemeProvider>
+    );
+  }
+}
+
+// const App = ({ children }) => (
+//   <MuiThemeProvider muiTheme={ muiTheme }>
+//     <div className='App'>
+//       <AppBar />
+//       <div className='content-wrapper'>
+//         { children }
+//       </div>
+//       <NavBar />
+//     </div>
+//   </MuiThemeProvider>
+// );
 
 export default App;

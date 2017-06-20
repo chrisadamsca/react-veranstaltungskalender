@@ -11,18 +11,18 @@ class UserGroups extends Component {
   componentDidMount() {
   }
 
-  quitGroup() {
-    console.log("pimmmel");
+  exitGroup() {
+    console.log('Exit group');
   }
 
   render() {
     return (
       <div className='groups'>
-        {this.groups.map(group => (
+        {this.props.groups.map(group => (
           <Card key={ group._id } className='card'>
             <CardTitle title={ group.name } />
             <CardText>{ group.description }</CardText>
-            <IconButton onClick={ this.quitGroup }>
+            <IconButton onTouchTap={ this.exitGroup }>
               <FontIcon className='material-icons'>remove_circle</FontIcon>
             </IconButton>
           </Card>

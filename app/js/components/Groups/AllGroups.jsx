@@ -11,6 +11,10 @@ class UserGroups extends Component {
   componentDidMount() {
   }
 
+  enterGroup() {
+    console.log("Enter group");
+  }
+
   render() {
     return (
       <div className='groups'>
@@ -18,7 +22,7 @@ class UserGroups extends Component {
           <Card key={ group._id } className='card'>
             <CardTitle title={ group.name } />
             <CardText>{ group.description }</CardText>
-            <IconButton>
+            <IconButton onTouchTap={ this.enterGroup }>
               <FontIcon className='material-icons'>add_box</FontIcon>
             </IconButton>
           </Card>
