@@ -11,7 +11,9 @@ export default class UserEventListContainer extends Component {
 
   componentDidMount() {
     const req = new XMLHttpRequest();
-    req.open('GET', '/api/event', true);
+    const userID = localStorage.getItem('currentUser').userID;
+
+    req.open('GET', '/api/user/' + userID, true);
     req.responseType = 'json';
 
     req.onload = () => {
@@ -19,7 +21,7 @@ export default class UserEventListContainer extends Component {
         // Success!
         const res = req.response;
         this.setState({
-          events: res,
+          events: res.events,
         });
       } else {
         // We reached our target server, but it returned an error
