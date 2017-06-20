@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import UserEventList from '../../components/Events/UserEvents';
+import AllGroups from '../../components/Groups/AllGroups';
 
-export default class UserEventListContainer extends Component {
+export default class AllGroupsContainer extends Component {
   constructor() {
     super();
-    this.state = { events: [] };
+    this.state = { groups: [] };
   }
 
   componentDidMount() {
     const req = new XMLHttpRequest();
-    const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
-    req.open('GET', '/api/user/' + userID, true);
+    req.open('GET', '/api/group', true);
     req.responseType = 'json';
 
     req.onload = () => {
@@ -19,7 +17,7 @@ export default class UserEventListContainer extends Component {
         // Success!
         const res = req.response;
         this.setState({
-          events: res.events,
+          groups: res,
         });
       } else {
         // We reached our target server, but it returned an error
@@ -35,7 +33,7 @@ export default class UserEventListContainer extends Component {
 
   render() {
     return (
-      <UserEventList events={ this.state.events } />
+      <AllGroups groups={ this.state.groups } />
     );
   }
 }
