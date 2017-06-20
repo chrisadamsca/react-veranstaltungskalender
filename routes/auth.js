@@ -13,7 +13,7 @@ function validateSignupForm(payload) {
     isFormValid = false;
     errors.email = 'Bitte geben sie eine korrekte E-Mail-Adresse an.';
   }
-
+  
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
     isFormValid = false;
     errors.password = 'Das Passwort muss mindestens 8 Zeichen lang sein.';
@@ -70,6 +70,7 @@ function validateLoginForm(payload) {
 
 router.post('/signup', (req, res, next) => {
   const validationResult = validateSignupForm(req.body);
+  console.log('signup reached');
   if (!validationResult.success) {
     return res.status(400).json({
       success: false,
