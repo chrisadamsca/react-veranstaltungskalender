@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card, CardText } from 'material-ui/Card';
+import { Card } from 'material-ui/Card';
+import { browserHistory } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -8,10 +9,10 @@ export default class GruppeErstellen extends Component {
     super();
 
     this.state = {
-      errors: {},
+      error: '',
       group: {
         name: '',
-        user: JSON.parse(localStorage.getItem('currentUser')).userID,
+        groupDesc: '',
       },
     };
 
@@ -22,9 +23,39 @@ export default class GruppeErstellen extends Component {
   submitForm(event) {
     event.preventDefault();
 
-    const name = encodeURIComponent(this.state.group.name);
+    // HTTP Message:
+    const groupName = encodeURIComponent(this.state.group.name);
+    const groupDesc = encodeURIComponent(this.state.group.groupDesc);
+    const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
+    const httpMessage = 'name=' + groupName + '&owner=' + userID + '&description=' + groupDesc;
 
-    console.log(name);
+    // AJAX-Request
+    const xhr = new XMLHttpRequest();
+    xhr.open('put', '/api/group/');
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.responseType = 'json';
+    xhr.addEventListener('load', () => {
+      if (xhr.status === 200) {
+        // ERFOLG:
+
+        // Entferne alle Fehler aus dem State
+        this.setState({
+          // errors: {},
+        });
+
+        // Weiterleiten
+        browserHistory.push('/gruppen');
+      } else {
+        // FEHLER:
+
+        // Setze den Fehler im State
+
+        this.setState({
+          error: 'Es ist etwas schiefgelaufen :(',
+        });
+      }
+    });
+    xhr.send(httpMessage);
   }
 
   changeGroup(event) {
@@ -40,13 +71,12 @@ export default class GruppeErstellen extends Component {
   render() {
     return (
       <div>
-        <div className='card-container'>
-          <h1 className='cardsHeader'>Gruppe erstellen:</h1>
-        </div>
 
-        <Card className='container'>
+        <Card className='container form-container'>
           <form action='/' onSubmit={ this.submitForm }>
-            <h2 className='card-heading'>Einloggen</h2>
+            <h2 className='card-heading'>Gruppe erstellen</h2>
+
+            { this.state.error && <p className='error-message'>{this.state.error}</p>}
 
             <div className='field-line'>
               <TextField
@@ -54,6 +84,13 @@ export default class GruppeErstellen extends Component {
                 name='name'
                 onChange={ this.changeGroup }
                 value={ this.state.group.name }
+              />
+              <TextField
+                hintText='Beschreibung'
+                name='groupDesc'
+                onChange={ this.changeGroup }
+                value={ this.state.group.groupDesc }
+                multiLine
               />
             </div>
 
