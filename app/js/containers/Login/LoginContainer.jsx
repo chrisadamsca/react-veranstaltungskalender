@@ -63,8 +63,6 @@ class LoginContainer extends React.Component {
         // Speichere den Token
         Auth.authenticateUser(xhr.response.token);
 
-        console.log(xhr.response.user);
-
         // Speichere den eingeloggten User im LocalStorage
         localStorage.setItem('currentUser', JSON.stringify(xhr.response.user));
 
