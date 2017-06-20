@@ -55,9 +55,13 @@ export default class EventErstellen extends Component {
     // HTTP Message:
     const eventName = encodeURIComponent(this.state.eventState.name);
     const eventDesc = encodeURIComponent(this.state.eventState.desc);
-    const groupsSelected = this.state.eventState.groups;
+    const groupsSelected = this.state.eventState.groups
     const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
-    const httpMessage = 'name=' + eventName + '&gId=' + groupsSelected + '&description=' + eventDesc;
+    let httpMessage = 'name=' + eventName + '&description=' + eventDesc;
+    //httpmessage mit gruppen aufüllen
+    for (let i=0; i<groupsSelected.length; i++) {
+      httpMessage += '&gId[' + i + ']=' + groupsSelected[i];
+    }
 
     // AJAX-Request
     const xhr = new XMLHttpRequest();
