@@ -33,9 +33,6 @@ export default class Events extends Component {
         this.setState({
           userGroups: res.groups,
         });
-        console.log('UserStart: ', this.state.userGroups);
-      } else {
-        // We reached our target server, but it returned an error
       }
     });
 
@@ -52,9 +49,6 @@ export default class Events extends Component {
         this.setState({
           otherGroups: res,
         });
-        console.log('OtherStart: ', this.state.otherGroups);
-      } else {
-        // We reached our target server, but it returned an error
       }
     };
 
@@ -77,12 +71,6 @@ export default class Events extends Component {
         const userGroups = this.state.userGroups.slice();
         const otherGroups = this.state.otherGroups.slice();
 
-        // console.log('Neuer Klick: ');
-        // console.log('User: ', userGroups);
-        // console.log('User from State: ', this.state.userGroupss);
-        // console.log('Other: ', otherGroups);
-        // console.log('GroupID: ', gId);
-
         let index;
         for (let i = 0; i < userGroups.length; i += 1) {
           if (userGroups[i]._id === gId) {
@@ -93,11 +81,6 @@ export default class Events extends Component {
         const transferGroup = userGroups[index];
         userGroups.splice(index, 1);
         otherGroups.push(transferGroup);
-
-        // console.log('Index: ', index);
-        // console.log('Transfer: ', transferGroup);
-        // console.log('User: ', userGroups);
-        // console.log('Other: ', otherGroups);
 
         this.setState({
           userGroups: userGroups,
@@ -123,11 +106,6 @@ export default class Events extends Component {
         const userGroups = this.state.userGroups.slice();
         const otherGroups = this.state.otherGroups.slice();
 
-        // console.log('Neuer Klick: ');
-        // console.log('User: ', userGroups);
-        // console.log('Other: ', otherGroups);
-        // console.log('GroupID: ', gId);
-
         let index;
         for (let i = 0; i < otherGroups.length; i += 1) {
           if (otherGroups[i]._id === gId) {
@@ -138,11 +116,6 @@ export default class Events extends Component {
         const transferGroup = otherGroups[index];
         otherGroups.splice(index, 1);
         userGroups.push(transferGroup);
-
-        // console.log('Index: ', otherGroupIndex[0]);
-        // console.log('Transfer: ', transferGroup);
-        // console.log('User: ', userGroups);
-        // console.log('Other: ', otherGroups);
 
         this.setState({
           userGroups: userGroups,
