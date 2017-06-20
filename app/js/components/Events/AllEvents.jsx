@@ -7,7 +7,6 @@ const AllEventList = state => (
       <Card key={ event._id } className='card'>
         <CardTitle title={ event.name } />
         <CardText>{ event.description }</CardText>
-
       </Card>
     ))}
   </div>
