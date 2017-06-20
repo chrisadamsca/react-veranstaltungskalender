@@ -23,10 +23,10 @@ class AllEventList extends Component {
           <Card key={ event._id } className='card'>
             <CardTitle title={ event.name } />
             <CardText>{ event.description }</CardText>
-            <IconButton className='cardButton' onTouchTap={ this.participateEvent }>
+            <IconButton onTouchTap={ this.participateEvent }>
               <FontIcon className='material-icons'>done</FontIcon>
             </IconButton>
-            <IconButton className='cardButton' onTouchTap={ this.declineEvent }>
+            <IconButton onTouchTap={ this.declineEvent }>
               <FontIcon className='material-icons'>clear</FontIcon>
             </IconButton>
           </Card>
