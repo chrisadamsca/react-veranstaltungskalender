@@ -12,7 +12,7 @@ export default class Events extends Component {
         </div>
 
         <div className='card-container'>
-          <h1 className='cardsHeader'>Alle Gruppen:</h1>
+          <h1 className='cardsHeader'>Andere Gruppen:</h1>
           <AllGroupsContainer />
         </div>
       </div>

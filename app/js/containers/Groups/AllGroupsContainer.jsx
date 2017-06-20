@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import AllGroups from '../../components/Groups/AllGroups';
 
-// This is a placeholder for a real request
-const fetchSomeGroups = cb =>
-  cb([
-    { id: '0001', title: 'Gruppe 1', desc: 'You look nice today.' },
-    { id: '0002', title: 'Gruppe 2', desc: 'I know, right?!' },
-  ]);
-
 export default class AllGroupsContainer extends Component {
   constructor() {
     super();
@@ -15,8 +8,27 @@ export default class AllGroupsContainer extends Component {
   }
 
   componentDidMount() {
-    fetchSomeGroups(groups =>
-    this.setState({ groups: groups }));
+    const req = new XMLHttpRequest();
+    req.open('GET', '/api/group', true);
+    req.responseType = 'json';
+
+    req.onload = () => {
+      if (req.status >= 200 && req.status < 400) {
+        // Success!
+        const res = req.response;
+        this.setState({
+          groups: res,
+        });
+      } else {
+        // We reached our target server, but it returned an error
+      }
+    };
+
+    req.onerror = () => {
+      // There was a connection error of some sort
+    };
+
+    req.send();
   }
 
   render() {

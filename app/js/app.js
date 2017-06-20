@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './views/App';
 import Events from './views/Events';
 import Gruppen from './views/Gruppen';

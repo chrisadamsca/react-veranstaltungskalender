@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
 
-const AllGroups = props => (
-  <div className='groups'>
-    {props.groups.map(group => (
-      <Card key={ group.id } className='card'>
-        <CardTitle title={ group.title } />
-        <CardText>{ group.desc }</CardText>
-      </Card>
-    ))}
-  </div>
-);
+class UserGroups extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default AllGroups;
+  componentDidMount() {
+  }
+
+  render() {
+    return (
+      <div className='groups'>
+        {this.props.groups.map(group => (
+          <Card key={ group._id } className='card'>
+            <CardTitle title={ group.name } />
+            <CardText>{ group.description }</CardText>
+            <IconButton>
+              <FontIcon className='material-icons'>add_box</FontIcon>
+            </IconButton>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+}
+
+export default UserGroups
