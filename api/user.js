@@ -17,7 +17,8 @@ module.exports.createUser = (req, res) => {
     description: ' ',
     password: data.password,
     groups: [],
-    events: [],
+    possibleEvents: [],
+    activeEvents: [],
   });
   newUser.save((err) => {
     if (err) return console.error(err);
@@ -41,15 +42,21 @@ module.exports.getUser = (req, res) => {
     }
 
     const returnGroups = [];
-    const returnEvents = [];
+    const returnPossibleEvents = [];
+    const returnActiveEvents = [];
     for (let i = 0; i < user.groups.length; i += 1) {
       Group.findById((user.groups[i]), (error, group) => {
         returnGroups.push(group);
       });
     }
-    for (let i = 0; i < user.events.length; i += 1) {
-      Event.findById((user.events[i]), (error, event) => {
-        returnEvents.push(event);
+    for (let i = 0; i < user.possibleEvents.length; i += 1) {
+      Event.findById((user.possibleEvents[i]), (error, event) => {
+        returnPossibleEvents.push(event);
+      });
+    }
+    for (let i = 0; i < user.activeEvents.length; i += 1) {
+      Event.findById((user.activeEvents[i]), (error, event) => {
+        returnActiveEvents.push(event);
       });
     }
     setTimeout(function () {
@@ -59,7 +66,8 @@ module.exports.getUser = (req, res) => {
         description: user.description,
         password: user.password,
         groups: returnGroups,
-        events: returnEvents,
+        activeEvents: returnActiveEvents,
+        possibleEvents: returnPossibleEvents,
       };
       res.status(200).send(returnValue);
     }, 100);
@@ -82,6 +90,7 @@ module.exports.updateUser = (req, res) => {
     if (err) {
       res.status(400).send('User nicht gefunden');
     }
+
 // add or remove a group
     if (data.gId != null) {
       Group.findById((data.gId), (error, group) => {
@@ -114,7 +123,7 @@ module.exports.updateUser = (req, res) => {
               });
           for (let i = 0; i < group.events.length; i += 1) {
             User.update({ _id: dates.userId },
-              { $addToSet: { events: (group.events[i]) } }, (er) => {
+              { $addToSet: { possibleEvents: (group.events[i]) } }, (er) => {
                 if (er) console.error(er);
               });
           }
@@ -126,6 +135,57 @@ module.exports.updateUser = (req, res) => {
           });
         }
       });
+    }
+
+    // participate in event or cancel participation
+    if (data.eventId != null) {
+      let userTakesPartInEvent = -1;
+      let eventPossible = -1;
+
+      for (let i = 0; i < user.activeEvents.length; i += 1) {
+        if (user.activeEvents[i] === data.eventId) {
+          userTakesPartInEvent = i;
+          eventPossible = i;
+        }
+      }
+      for (let i = 0; i < user.possibleEvents.length; i += 1) {
+        if (user.possibleEvents[i] === data.eventId) {
+          eventPossible = i;
+        }
+      }
+      if (eventPossible >= 0) {
+        if (userTakesPartInEvent === -1) {
+          User.findByIdAndUpdate(
+            dates.userId,
+            { $addToSet: { activeEvents: (data.eventId) } }, (erro) => {
+              if (erro) res.status(400).send('User nicht gefunden');
+              else {
+                User.update(
+                { _id: dates.userId },
+                { $pull: { possibleEvents: data.eventId } }, (error) => {
+                  if (error) res.status(400).send('User nicht gefunden');
+                  else res.status(200).send('Eventteilnahme erfolgreich');
+                });
+              }
+            });
+        } else {
+          User.findByIdAndUpdate(
+          dates.userId,
+          { $addToSet: { possibleEvents: (data.eventId) } }, (erro) => {
+            if (erro) res.status(400).send('User nicht gefunden');
+            else {
+              User.update(
+              { _id: dates.userId },
+              { $pull: { activeEvents: data.eventId } }, (error) => {
+                if (error) res.status(400).send('User nicht gefunden');
+                else res.status(200).send('Eventabsage erfolgreich');
+              });
+            }
+          });
+        }
+      } else {
+        res.status(400).send('Konnte dem Event nicht zu-/absagen');
+      }
     }
 
     // Change users name
@@ -207,7 +267,8 @@ module.exports.fillDb = (req, res) => {
     description: 'Ein Mitstudent von Benni',
     password: 'test1234',
     groups: [],
-    events: [],
+    possibleEvents: [],
+    activeEvents: [],
   });
   newUser1.save((err) => {
     if (err) return console.error(err);
@@ -220,7 +281,8 @@ module.exports.fillDb = (req, res) => {
     description: 'Ein ganz normaler HdM-Student',
     password: 'test1234',
     groups: [],
-    events: [],
+    possibleEvents: [],
+    activeEvents: [],
   });
   newUser2.save((err) => {
     if (err) return console.error(err);
@@ -231,9 +293,10 @@ module.exports.fillDb = (req, res) => {
     name: 'Hannes',
     email: 'hannes@jahu.com',
     description: 'Bennis Bruder',
-    password: 'test1234',
+    password: '$',
     groups: [],
-    events: [],
+    possibleEvents: [],
+    activeEvents: [],
   });
   newUser3.save((err) => {
     if (err) return console.error(err);
@@ -305,12 +368,12 @@ module.exports.fillDb = (req, res) => {
   newGroup2.events.push(newEvent1._id.toString());
   newGroup2.events.push(newEvent3._id.toString());
 
-  newUser1.events.push(newEvent2._id.toString());
-  newUser1.events.push(newEvent3._id.toString());
-  newUser2.events.push(newEvent1._id.toString());
-  newUser2.events.push(newEvent2._id.toString());
-  newUser2.events.push(newEvent3._id.toString());
-  newUser3.events.push(newEvent1._id.toString());
-  newUser3.events.push(newEvent3._id.toString());
+  newUser1.possibleEvents.push(newEvent2._id.toString());
+  newUser1.possibleEvents.push(newEvent3._id.toString());
+  newUser2.possibleEvents.push(newEvent1._id.toString());
+  newUser2.possibleEvents.push(newEvent2._id.toString());
+  newUser2.possibleEvents.push(newEvent3._id.toString());
+  newUser3.possibleEvents.push(newEvent1._id.toString());
+  newUser3.possibleEvents.push(newEvent3._id.toString());
   res.send('done filling');
 };

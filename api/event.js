@@ -27,7 +27,7 @@ module.exports.createNewEvent = (req, res) => {
     Group.findById(data.gId[i], (err, group) => {
       for (let j = 0; j < group.users.length; j += 1) {
         User.update({ _id: group.users[j] },
-          { $addToSet: { events: (newEvent._id.toString()) } }, (er) => {
+          { $addToSet: { possibleEvents: (newEvent._id.toString()) } }, (er) => {
             if (er) console.error(er);
           });
       }
@@ -166,8 +166,13 @@ module.exports.deleteEvent = (req, res) => {
               if (erro) res.status(400).send('Gruppe konnte nicht gefunden werden');
               for (let j = 0; j < group.users.length; j += 1) {
                 User.update({ _id: group.users[j] },
-                { $pull: { events: data.eventId } }, (error) => {
-                  if (error) res.status(400).send('Event nicht gefunden');
+                { $pull: { activeEvents: data.eventId } }, (error) => {
+                  if (error) console.log('Event nicht gefunden');
+                  return null;
+                });
+                User.update({ _id: group.users[j] },
+                { $pull: { possibleEvents: data.eventId } }, (error) => {
+                  if (error) console.log('Event nicht gefunden');
                   return null;
                 });
               }
