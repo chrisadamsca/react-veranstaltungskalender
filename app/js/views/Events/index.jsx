@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
-import EventList from '../../components/Events/EventList';
+import UserEventListContainer from '../../containers/Events/UserEventsContainer';
+import AllEventListContainer from '../../containers/Events/AllEventsContainer';
+
 
 export default class Events extends Component {
   render() {
     return (
       <div className='app-body'>
-        <h1 className='tile'>Meine Events:</h1>
-        <EventList />
+        <div className='card-container'>
+          <h1 className='cardsHeader'>Meine Events:</h1>
+          <UserEventListContainer />
+        </div>
+
+        <div className='card-container'>
+          <h1 className='cardsHeader'>Alle Events:</h1>
+          <AllEventListContainer />
+        </div>
       </div>
     );
   }

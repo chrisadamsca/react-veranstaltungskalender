@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import UserEventList from '../../components/Events/UserEvents';
 
 // This is a placeholder for a real request
 const fetchSomeEvents = cb =>
   cb([
     { id: '0001', title: 'Event 1', desc: 'You look nice today.' },
     { id: '0002', title: 'Event 2', desc: 'I know, right?!' },
+    { id: '0003', title: 'Event 3', desc: 'I know, right?!' },
   ]);
 
-export default class EventList extends Component {
+export default class UserEventListContainer extends Component {
   constructor() {
     super();
     this.state = { events: [] };
@@ -18,11 +20,7 @@ export default class EventList extends Component {
   }
   render() {
     return (
-      <ul className='tile-list'>
-        {this.state.events.map(event => (
-          <li key={ event.id } className='tile'>{event.title}</li>
-        ))}
-      </ul>
+      <UserEventList events={ this.state.events } />
     );
   }
 }
