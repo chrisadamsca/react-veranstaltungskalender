@@ -46,7 +46,9 @@ module.exports.returnAllButUserGroups = (req, res) => {
     User.findById((data.userId), (error, user) => {
       for (let i = 0; i < groups.length; i += 1) {
         for (let j = 0; j < user.groups.length; j += 1) {
-          if (user.groups[j] === groups[i]._id.toString()) groups.splice(i, 1);
+          if (user.groups[j] === groups[i]._id.toString()) {
+            groups.splice(i, 1);
+          }
         }
       }
       res.status(200).send(groups);
