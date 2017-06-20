@@ -23,7 +23,7 @@ export default class Events extends Component {
             <OtherEventListContainer />
           </div>
 
-          <Link to='/eventerstellen' activeClassName='active'>
+          <Link to='/eventserstellen' activeClassName='active'>
             <FloatingActionButton className='floatingButton'>
               <ContentAdd />
             </FloatingActionButton>

@@ -1,5 +1,6 @@
 import App from './views/App';
 import Events from './views/Events';
+import EventsErstellen from './views/Events/EventsErstellen';
 import Gruppen from './views/Gruppen';
 import GruppeErstellen from './views/Gruppen/GruppeErstellen';
 import Profil from './views/Profil';
@@ -21,9 +22,17 @@ const routes = {
         } else {
           callback(null, Events);
         }
-      }
+      },
     },
-
+    {
+      path: '/eventserstellen',
+      component: EventsErstellen,
+      onEnter: (nextState, replace) => {
+        if (!Auth.isUserAuthenticated()) {
+          replace('/login');
+        }
+      },
+    },
     {
       path: '/gruppen',
       component: Gruppen,
@@ -45,17 +54,17 @@ const routes = {
         } else {
           callback(null, Login);
         }
-      }
+      },
     },
 
     {
       path: '/login',
-      component: Login
+      component: Login,
     },
 
     {
       path: '/signup',
-      component: SignUp
+      component: SignUp,
     },
 
     {
@@ -65,10 +74,10 @@ const routes = {
         localStorage.setItem('currentUser', '');
         // change the current URL to /
         replace('/');
-      }
-    }
+      },
+    },
 
-  ]
+  ],
 };
 
 export default routes;
