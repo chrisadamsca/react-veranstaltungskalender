@@ -11,7 +11,7 @@ export default class UserEventListContainer extends Component {
 
   componentDidMount() {
     const req = new XMLHttpRequest();
-    const userID = localStorage.getItem('currentUser').userID;
+    const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
 
     req.open('GET', '/api/user/' + userID, true);
     req.responseType = 'json';
