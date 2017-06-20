@@ -52,17 +52,16 @@ export default class EventErstellen extends Component {
 
   submitForm(event) {
     event.preventDefault();
-
     // HTTP Message:
     const eventName = encodeURIComponent(this.state.eventState.name);
     const eventDesc = encodeURIComponent(this.state.eventState.desc);
     const groupsSelected = this.state.eventState.groups;
     const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
-    const httpMessage = 'name=' + eventName + '&owner=' + userID + '&description=' + eventDesc;
+    const httpMessage = 'name=' + eventName + '&gId=' + groupsSelected + '&description=' + eventDesc;
 
     // AJAX-Request
     const xhr = new XMLHttpRequest();
-    xhr.open('post', '/api/group/');
+    xhr.open('post', '/api/event');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
@@ -75,7 +74,7 @@ export default class EventErstellen extends Component {
         });
 
         // Weiterleiten
-        browserHistory.push('/gruppen');
+        browserHistory.push('/');
       } else {
         // FEHLER:
 
