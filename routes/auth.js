@@ -13,7 +13,7 @@ function validateSignupForm(payload) {
     isFormValid = false;
     errors.email = 'Bitte geben sie eine korrekte E-Mail-Adresse an.';
   }
-  
+
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
     isFormValid = false;
     errors.password = 'Das Passwort muss mindestens 8 Zeichen lang sein.';
