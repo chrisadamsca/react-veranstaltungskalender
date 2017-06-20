@@ -31,8 +31,26 @@ module.exports.createNewGroup = (req, res) => {
 // returns all groups
 module.exports.getAllGroups = (req, res) => {
   Group.find((err, groups) => {
-    if (err) return console.error(err);
-    res.send(groups);
+    if (err) console.error(err);
+    res.status(200).send(groups);
+    return null;
+  });
+};
+
+
+// returns all groups but the ones a given user is in
+module.exports.returnAllButUserGroups = (req, res) => {
+  const data = req.params;
+  Group.find((err, groups) => {
+    if (err) console.error(err);
+    User.findById((data.userId), (error, user) => {
+      for (let i = 0; i < groups.length; i += 1) {
+        for (let j = 0; j < user.groups.length; j += 1) {
+          if (user.groups[j] === groups[i]._id.toString()) groups.splice(i, 1);
+        }
+      }
+      res.status(200).send(groups);
+    });
     return null;
   });
 };

@@ -17,6 +17,10 @@ router.get('/', (req, res) => {
 router.get('/:gId', (req, res) => {
   group.returnGroup(req, res);
 });
+// Get all Groups a user is not part of
+router.get('/user/:userId', (req, res) => {
+  group.returnAllButUserGroups(req, res);
+});
 
 // Update Group Data
 router.put('/:gId', (req, res) => {
