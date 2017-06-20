@@ -9,13 +9,14 @@ export default class OtherGroupsContainer extends Component {
 
   componentDidMount() {
     const req = new XMLHttpRequest();
-    req.open('GET', '/api/group', true);
+    req.open('GET', '/api/group/user/' + JSON.parse(localStorage.getItem('currentUser')).userID, true);
     req.responseType = 'json';
 
     req.onload = () => {
       if (req.status >= 200 && req.status < 400) {
         // Success!
         const res = req.response;
+        console.log(res);
         this.setState({
           groups: res,
         });
