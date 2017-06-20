@@ -22,7 +22,7 @@ class OtherGroups extends Component {
           <Card key={ group._id } className='card'>
             <CardTitle title={ group.name } />
             <CardText>{ group.description }</CardText>
-            <IconButton onTouchTap={ this.enterGroup }>
+            <IconButton className='cardButton' onTouchTap={ this.enterGroup }>
               <FontIcon className='material-icons'>add_box</FontIcon>
             </IconButton>
           </Card>

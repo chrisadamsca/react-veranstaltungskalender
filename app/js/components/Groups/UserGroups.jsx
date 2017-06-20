@@ -22,7 +22,7 @@ class UserGroups extends Component {
           <Card key={ group._id } className='card'>
             <CardTitle title={ group.name } />
             <CardText>{ group.description }</CardText>
-            <IconButton onTouchTap={ this.exitGroup }>
+            <IconButton className='cardButton' onTouchTap={ this.exitGroup }>
               <FontIcon className='material-icons'>remove_circle</FontIcon>
             </IconButton>
           </Card>
