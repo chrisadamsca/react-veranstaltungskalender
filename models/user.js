@@ -10,7 +10,8 @@ const userSchema = mongoose.Schema({
   description: String,
   password: String,
   groups: [],
-  events: [],
+  possibleEvents: [],
+  activeEvents: [],
 });
 
 userSchema.methods.comparePassword = function comparePassword(password, callback) {
