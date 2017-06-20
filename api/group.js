@@ -11,8 +11,7 @@ module.exports.createNewGroup = (req, res) => {
 
   const newGroup = new Group({
     name: data.name,
-    description: '',
-    image: data.imagePath,
+    description: data.description,
     users: [data.owner],
     events: [],
   });
@@ -24,7 +23,7 @@ module.exports.createNewGroup = (req, res) => {
       }
     });
 
-    res.status(200).send('Group created!');
+    res.status(200).send('Gruppe erstellt!');
     return null;
   });
 };

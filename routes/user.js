@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
   user.createUser(req, res);
 });
 
-//fill and empty db, testing and presentation only
+// fill and empty db, testing and presentation only
 router.get('/fillDb', (req, res) => {
   user.fillDb(req, res);
 });
@@ -27,9 +27,9 @@ router.get('/:userId', (req, res) => {
 });
 
 // Update User Data
-// router.put('/:userId', (req, res) => {
-//   user.updateUser(req, res);
-// });
+router.put('/:userId', (req, res) => {
+  user.updateUser(req, res);
+});
 
 // Delete User
 router.delete('/:userId', (req, res) => {
@@ -41,7 +41,4 @@ router.post('/login', (req, res) => {
   user.loginUser(req, res);
 });
 
-router.get('/fillDb', (req, res) => {
-  res.send("hi");
-})
 module.exports = router;
