@@ -31,7 +31,7 @@ export default class GruppeErstellen extends Component {
 
     // AJAX-Request
     const xhr = new XMLHttpRequest();
-    xhr.open('put', '/api/group/');
+    xhr.open('post', '/api/group/');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
@@ -49,7 +49,6 @@ export default class GruppeErstellen extends Component {
         // FEHLER:
 
         // Setze den Fehler im State
-
         this.setState({
           error: 'Es ist etwas schiefgelaufen :(',
         });
