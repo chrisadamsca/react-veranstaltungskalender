@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
 import UserEventListContainer from '../../containers/Events/UserEventsContainer';
 import AllEventListContainer from '../../containers/Events/AllEventsContainer';
 import Auth from '../../modules/Auth';
@@ -18,6 +21,12 @@ export default class Events extends Component {
             <h1 className='cardsHeader'>Alle Events:</h1>
             <AllEventListContainer />
           </div>
+
+          <Link to='/eventerstellen' activeClassName='active'>
+            <FloatingActionButton className='floatingButton'>
+              <ContentAdd />
+            </FloatingActionButton>
+          </Link>
         </div>
       );
     } else {
