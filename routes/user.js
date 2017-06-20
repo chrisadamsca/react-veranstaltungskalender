@@ -8,10 +8,15 @@ router.post('/', (req, res) => {
   user.createUser(req, res);
 });
 
-// Get all Users
+//fill and empty db, testing and presentation only
 router.get('/fillDb', (req, res) => {
   user.fillDb(req, res);
 });
+router.get('/emptyDb', (req, res) => {
+  user.emptyDb(req, res);
+});
+
+// Get all Users
 router.get('/', (req, res) => {
   user.getAllUsers(req, res);
 });

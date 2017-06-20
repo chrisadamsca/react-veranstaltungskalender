@@ -184,13 +184,28 @@ module.exports.loginUser = (req, res) => {
   });
 };
 
-// Fill Database (only for testing and demonstration purposes)
+// Empty Database (only for testing and demonstration)
+module.exports.emptyDb = (req, res) => {
+  User.remove({}, (err) => {
+    if (err) console.error(err);
+  });
+  Group.remove({}, (err) => {
+    if (err) console.error(err);
+  });
+  Event.remove({}, (err) => {
+    if (err) console.error(err);
+  });
+
+  res.send('done eptying');
+};
+
+// Fill Database (only for testing and demonstration)
 module.exports.fillDb = (req, res) => {
   const newUser1 = new User({
     name: 'Jimmi',
-    email: 'Jim@fmx.de',
+    email: 'jim@fmx.de',
     description: 'Ein Mitstudent von Benni',
-    password: '$2a$10$29FIW5/pW6MHjdnIu.EHI.hNb6YM9sEvasT7GFfkp8HgES./nTZLq',
+    password: 'test1234',
     groups: [],
     events: [],
   });
@@ -201,9 +216,9 @@ module.exports.fillDb = (req, res) => {
 
   const newUser2 = new User({
     name: 'Benni',
-    email: 'Benni@googelmail.com',
+    email: 'benni@googelmail.com',
     description: 'Ein ganz normaler HdM-Student',
-    password: '$2a$10$xAe1bm1UqRttH3bJLPIrHu9FHALols5Wx2VuQoYjZlEWt/63i0UN6',
+    password: 'test1234',
     groups: [],
     events: [],
   });
@@ -216,7 +231,7 @@ module.exports.fillDb = (req, res) => {
     name: 'Hannes',
     email: 'hannes@jahu.com',
     description: 'Bennis Bruder',
-    password: '$2a$10$Yv.7O1JTlsgBi37fTOE76u8uKZpYyRtG5ZA99KNh65bupYVklafwO',
+    password: 'test1234',
     groups: [],
     events: [],
   });
@@ -297,5 +312,5 @@ module.exports.fillDb = (req, res) => {
   newUser2.events.push(newEvent3._id.toString());
   newUser3.events.push(newEvent1._id.toString());
   newUser3.events.push(newEvent3._id.toString());
-  res.send('done');
+  res.send('done filling');
 };
