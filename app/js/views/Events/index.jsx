@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UserEventListContainer from '../../containers/Events/UserEventsContainer';
 import AllEventListContainer from '../../containers/Events/AllEventsContainer';
+import Auth from '../../modules/Auth';
 
 
 export default class Events extends Component {
