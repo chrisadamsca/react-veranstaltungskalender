@@ -36,8 +36,7 @@ class SignUpContainer extends React.Component {
     const name = encodeURIComponent(this.state.user.name);
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
-    const formData = `name=${name}&email=${email}&password=${password}`;
-    const httpMessage = 'name' + name + 'email=' + email + '&password=' + password;
+    const httpMessage = 'name=' + name + '&email=' + email + '&password=' + password;
 
     // AJAX-Request
     const xhr = new XMLHttpRequest();
