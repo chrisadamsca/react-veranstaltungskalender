@@ -39,29 +39,28 @@ class LoginContainer extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    // create a string for an HTTP body message
+    // HTTP Message:
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
-    const formData = `email=${email}&password=${password}`;
+    const httpMessage = 'email=' + email + '&password=' + password;
 
-    // create an AJAX request
+    // AJAX-Request
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/api/auth/login');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
-        // success
+        // ERFOLG:
 
-        // change the component-container state
+        // Entferne alle Fehler aus dem State
         this.setState({
           errors: {},
         });
 
-        // save the token
+        // Speichere den Token
         Auth.authenticateUser(xhr.response.token);
 
         // Speichere den eingeloggten User im LocalStorage
@@ -70,9 +69,9 @@ class LoginContainer extends React.Component {
         // Weiterleiten
         browserHistory.push('/profil');
       } else {
-        // failure
+        // FEHLER:
 
-        // change the component state
+        // Setze den Fehler im State
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
 
@@ -81,7 +80,7 @@ class LoginContainer extends React.Component {
         });
       }
     });
-    xhr.send(formData);
+    xhr.send(httpMessage);
   }
 
   /**

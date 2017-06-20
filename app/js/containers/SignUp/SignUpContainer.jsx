@@ -30,36 +30,36 @@ class SignUpContainer extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   processForm(event) {
-    // prevent default action. in this case, action is the form submission event
     event.preventDefault();
 
-    // create a string for an HTTP body message
+    // HTTP Message:
     const name = encodeURIComponent(this.state.user.name);
     const email = encodeURIComponent(this.state.user.email);
     const password = encodeURIComponent(this.state.user.password);
     const formData = `name=${name}&email=${email}&password=${password}`;
+    const httpMessage = 'name' + name + 'email=' + email + '&password=' + password;
 
-    // create an AJAX request
+    // AJAX-Request
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/api/auth/signup');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.responseType = 'json';
     xhr.addEventListener('load', () => {
       if (xhr.status === 200) {
-        // success
+        // ERFOLG:
 
-        // change the component-container state
+        // Entferne alle Fehler aus dem State
         this.setState({
           errors: {},
         });
 
-        // set a message
+        // Setzt die Erfolgsnachricht
         localStorage.setItem('successMessage', xhr.response.message);
 
-        // make a redirect
+        // Leite weiter auf Login
         browserHistory.push('/login');
       } else {
-        // failure
+        // FEHLER:
 
         const errors = xhr.response.errors ? xhr.response.errors : {};
         errors.summary = xhr.response.message;
@@ -69,7 +69,7 @@ class SignUpContainer extends React.Component {
         });
       }
     });
-    xhr.send(formData);
+    xhr.send(httpMessage);
   }
 
   /**
