@@ -2,7 +2,6 @@ const User = require('../models/user');
 const Group = require('../models/groups');
 const Event = require('../models/events');
 
-
 // Create User
 module.exports.createUser = (req, res) => {
   const data = req.body;
@@ -183,4 +182,120 @@ module.exports.loginUser = (req, res) => {
     }
     res.status(200).send(user._id);
   });
+};
+
+// Fill Database (only for testing and demonstration purposes)
+module.exports.fillDb = (req, res) => {
+  const newUser1 = new User({
+    name: 'Jimmi',
+    email: 'Jim@fmx.de',
+    description: 'Ein Mitstudent von Benni',
+    password: '$2a$10$29FIW5/pW6MHjdnIu.EHI.hNb6YM9sEvasT7GFfkp8HgES./nTZLq',
+    groups: [],
+    events: [],
+  });
+  newUser1.save((err) => {
+    if (err) return console.error(err);
+    return null;
+  });
+
+  const newUser2 = new User({
+    name: 'Benni',
+    email: 'Benni@googelmail.com',
+    description: 'Ein ganz normaler HdM-Student',
+    password: '$2a$10$xAe1bm1UqRttH3bJLPIrHu9FHALols5Wx2VuQoYjZlEWt/63i0UN6',
+    groups: [],
+    events: [],
+  });
+  newUser2.save((err) => {
+    if (err) return console.error(err);
+    return null;
+  });
+
+  const newUser3 = new User({
+    name: 'Hannes',
+    email: 'hannes@jahu.com',
+    description: 'Bennis Bruder',
+    password: '$2a$10$Yv.7O1JTlsgBi37fTOE76u8uKZpYyRtG5ZA99KNh65bupYVklafwO',
+    groups: [],
+    events: [],
+  });
+  newUser3.save((err) => {
+    if (err) return console.error(err);
+    return null;
+  });
+
+  const newGroup1 = new Group({
+    name: 'Familie',
+    description: 'Verwandte',
+    image: 'file.png',
+    users: [newUser2._id.toString(), newUser3._id.toString()],
+    events: [],
+  });
+  newGroup1.save((err) => {
+    if (err) console.error(err);
+  });
+
+  const newGroup2 = new Group({
+    name: 'HdM-Freunde',
+    description: 'Alle Freunde an der HdM',
+    image: 'anotherFile.png',
+    users: [newUser2._id.toString(), newUser1._id.toString()],
+    events: [],
+  });
+  newGroup2.save((err) => {
+    if (err) console.error(err);
+  });
+
+  const newEvent1 = new Event({
+    name: 'MediaNight',
+    description: 'Tolle Veranstaltung',
+    location: 'An der HdM',
+    date: new Date('2017-06-29T19:00:00.000Z'),
+    groups: [newGroup2._id.toString()],
+  });
+  newEvent1.save((err) => {
+    if (err) console.error(err);
+  });
+
+  const newEvent2 = new Event({
+    name: 'Opas Geburtstag',
+    description: 'Alle Jahre wieder',
+    location: 'Gasthaus Alte Linde',
+    date: new Date('2017-07-11T14:00:00.000Z'),
+    groups: [newGroup1._id.toString()],
+  });
+  newEvent2.save((err) => {
+    if (err) console.error(err);
+  });
+
+  const newEvent3 = new Event({
+    name: 'Freibad',
+    description: 'Im Sommer gehts ins Freibad',
+    location: 'Freibad Vaihingen',
+    date: new Date('2017-07-10T09:40:00.000Z'),
+    groups: [newGroup1._id.toString(), newGroup2._id.toString()],
+  });
+  newEvent3.save((err) => {
+    if (err) console.error(err);
+  });
+
+  newUser1.groups.push(newGroup2._id.toString());
+  newUser2.groups.push(newGroup1._id.toString());
+  newUser2.groups.push(newGroup2._id.toString());
+  newUser3.groups.push(newGroup1._id.toString());
+
+  newGroup1.events.push(newEvent2._id.toString());
+  newGroup1.events.push(newEvent3._id.toString());
+  newGroup2.events.push(newEvent1._id.toString());
+  newGroup2.events.push(newEvent3._id.toString());
+
+  newUser1.events.push(newEvent2._id.toString());
+  newUser1.events.push(newEvent3._id.toString());
+  newUser2.events.push(newEvent1._id.toString());
+  newUser2.events.push(newEvent2._id.toString());
+  newUser2.events.push(newEvent3._id.toString());
+  newUser3.events.push(newEvent1._id.toString());
+  newUser3.events.push(newEvent3._id.toString());
+  res.send('done');
 };
