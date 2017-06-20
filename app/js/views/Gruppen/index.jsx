@@ -34,7 +34,6 @@ export default class Events extends Component {
     } else {
       return (
         <div className='app-body'>
-          <Link to='/profil' activeClassName='active'>Einloggen</Link>
           <div className='card-container'>
             <h1 className='cardsHeader'>Alle Gruppen:</h1>
             <AllGroupsContainer />

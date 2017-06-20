@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import UserEventList from '../../components/Events/UserEvents';
 
 export default class UserEventListContainer extends Component {
@@ -10,8 +9,7 @@ export default class UserEventListContainer extends Component {
 
   componentDidMount() {
     const req = new XMLHttpRequest();
-    const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
-    req.open('GET', '/api/user/' + userID, true);
+    req.open('GET', '/api/user/' + JSON.parse(localStorage.getItem('currentUser')).userID, true);
     req.responseType = 'json';
 
     req.onload = () => {
@@ -19,7 +17,7 @@ export default class UserEventListContainer extends Component {
         // Success!
         const res = req.response;
         this.setState({
-          events: res.events,
+          events: res.activeEvents,
         });
       } else {
         // We reached our target server, but it returned an error

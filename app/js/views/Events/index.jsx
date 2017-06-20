@@ -5,6 +5,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import UserEventListContainer from '../../containers/Events/UserEventsContainer';
 import AllEventListContainer from '../../containers/Events/AllEventsContainer';
+import OtherEventListContainer from '../../containers/Events/OtherEventsContainer';
 import Auth from '../../modules/Auth';
 
 export default class Events extends Component {
@@ -18,8 +19,8 @@ export default class Events extends Component {
           </div>
 
           <div className='card-container'>
-            <h1 className='cardsHeader'>Alle Events:</h1>
-            <AllEventListContainer />
+            <h1 className='cardsHeader'>Andere Events:</h1>
+            <OtherEventListContainer />
           </div>
 
           <Link to='/eventerstellen' activeClassName='active'>
@@ -32,8 +33,6 @@ export default class Events extends Component {
     } else {
       return (
         <div className='app-body'>
-          <Link to='/profil' activeClassName='active'>Einloggen</Link>
-
           <div className='card-container'>
             <h1 className='cardsHeader'>Alle Events:</h1>
             <AllEventListContainer />

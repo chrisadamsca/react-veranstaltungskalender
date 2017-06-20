@@ -8,14 +8,20 @@ export default class AppBar extends Component {
     if (Auth.isUserAuthenticated()) {
       return (
         <div id='AppBar'>
-          <Link className='logoutBtn' to='/logout'>
-            <FlatButton label="Ausloggen" />
+          <Link className='appBarBtn' to='/logout'>
+            <FlatButton label="Ausloggen" rippleColor='#0A80FC' labelStyle={ { color: 'white', fontSize: '12px' } } style={ { height: 'auto' } } />
           </Link>
         </div>
       );
     } else {
       return (
-        <div id='AppBar'></div>
+        <div id='AppBar'>
+          <div id='AppBar'>
+            <Link className='appBarBtn' to='/profil'>
+              <FlatButton label="Einloggen" rippleColor='#0A80FC' labelStyle={ { color: 'white', fontSize: '12px' } } style={ { height: 'auto' } } />
+            </Link>
+          </div>
+        </div>
       );
     }
 
