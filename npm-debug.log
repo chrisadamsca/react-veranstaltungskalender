@@ -1,7 +1,11 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
 2 info using npm@3.10.10
+<<<<<<< HEAD
 3 info using node@v6.10.3
+=======
+3 info using node@v6.10.2
+>>>>>>> group-component
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle eventapp@1.0.0~prestart: eventapp@1.0.0
 6 silly lifecycle eventapp@1.0.0~prestart: no script for prestart, continuing
@@ -26,7 +30,11 @@
 16 verbose cwd /app
 17 error Linux 4.9.27-moby
 18 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "start"
+<<<<<<< HEAD
 19 error node v6.10.3
+=======
+19 error node v6.10.2
+>>>>>>> group-component
 20 error npm  v3.10.10
 21 error code ELIFECYCLE
 22 error eventapp@1.0.0 start: `node server.js`

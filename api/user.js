@@ -70,6 +70,7 @@ module.exports.getUser = (req, res) => {
         possibleEvents: returnPossibleEvents,
       };
       res.status(200).send(returnValue);
+      return null;
     }, 100);
   });
 };
