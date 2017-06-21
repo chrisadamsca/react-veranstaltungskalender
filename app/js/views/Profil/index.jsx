@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Avatar from 'material-ui/Avatar';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 
 class Profil extends React.Component {
   render() {
@@ -8,13 +10,23 @@ class Profil extends React.Component {
     if (localStorage.getItem('currentUser') !== '') {
       currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
+
+    let imgURL = window.location.origin;
+    imgURL += '/'+currentUser.image;
+    console.log(imgURL);
+
     return (
-      <div className='loggedProfile'>
-        <Avatar src='{ currentUser.image }' />
-        <h1>{ currentUser.name }</h1>
-        <p>{ currentUser.email }</p>
-        <Link to='/logout'>Ausloggen</Link>
-      </div>
+      <Card>
+        <CardText>
+          <div className='loggedProfile'>
+            <Avatar size='150' src={ imgURL } />
+            <h1>{ currentUser.name }</h1>
+            <p>{ currentUser.email }</p>
+            <p>{ currentUser.desc }</p>
+
+          </div>
+        </CardText>
+      </Card>
     );
   }
 }
