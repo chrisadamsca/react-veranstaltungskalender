@@ -3,6 +3,7 @@ const Group = require('../models/groups');
 const Event = require('../models/events');
 const winston = require('winston');
 
+winston.level = 'debug';
 // Create User
 module.exports.createUser = (req, res) => {
   const data = req.body;
@@ -17,6 +18,7 @@ module.exports.createUser = (req, res) => {
     email: data.email,
     description: ' ',
     password: data.password,
+    image: './userImage/avatar.jpeg',
     groups: [],
     possibleEvents: [],
     activeEvents: [],
@@ -276,10 +278,11 @@ module.exports.emptyDb = (req, res) => {
 // Fill Database (only for testing and demonstration)
 module.exports.fillDb = (req, res) => {
   const newUser1 = new User({
-    name: 'Jimmi',
+    name: 'Jimmy Changa',
     email: 'jim@fmx.de',
     description: 'Ein Mitstudent von Benni',
     password: 'test1234',
+    image: './userImage/avatar.jpeg',
     groups: [],
     possibleEvents: [],
     activeEvents: [],
@@ -290,10 +293,11 @@ module.exports.fillDb = (req, res) => {
   });
 
   const newUser2 = new User({
-    name: 'Benni',
+    name: 'Benni Babel',
     email: 'benni@googelmail.com',
     description: 'Ein ganz normaler HdM-Student',
     password: 'test1234',
+    image: './userImage/avatar.jpeg',
     groups: [],
     possibleEvents: [],
     activeEvents: [],
@@ -304,9 +308,10 @@ module.exports.fillDb = (req, res) => {
   });
 
   const newUser3 = new User({
-    name: 'Hannes',
+    name: 'Hannes Hammann',
     email: 'hannes@jahu.com',
     description: 'Bennis Bruder',
+    image: './userImage/avatar.jpeg',
     password: '$',
     groups: [],
     possibleEvents: [],

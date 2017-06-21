@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
   },
   description: String,
   password: String,
+  image: String,
   groups: [],
   possibleEvents: [],
   activeEvents: [],
