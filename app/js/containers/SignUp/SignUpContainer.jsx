@@ -4,13 +4,9 @@ import SignUpForm from '../../components/SignUp/SignUpForm';
 
 class SignUpContainer extends React.Component {
 
-  /**
-   * Class constructor.
-   */
   constructor(props, context) {
     super(props, context);
 
-    // set the initial component state
     this.state = {
       errors: {},
       user: {
@@ -24,11 +20,6 @@ class SignUpContainer extends React.Component {
     this.changeUser = this.changeUser.bind(this);
   }
 
-  /**
-   * Process the form.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   processForm(event) {
     event.preventDefault();
 
@@ -52,9 +43,6 @@ class SignUpContainer extends React.Component {
           errors: {},
         });
 
-        // Setzt die Erfolgsnachricht
-        localStorage.setItem('successMessage', xhr.response.message);
-
         // Leite weiter auf Login
         browserHistory.push('/login');
       } else {
@@ -71,11 +59,6 @@ class SignUpContainer extends React.Component {
     xhr.send(httpMessage);
   }
 
-  /**
-    * Change the user object.
-    *
-    * @param {object} event - the JavaScript event object
-    */
   changeUser(event) {
     const field = event.target.name;
     const user = this.state.user;
@@ -86,9 +69,6 @@ class SignUpContainer extends React.Component {
     });
   }
 
-  /**
-   * Render the component.
-   */
   render() {
     return (
       <SignUpForm

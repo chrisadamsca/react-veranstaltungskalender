@@ -5,24 +5,11 @@ import LoginForm from '../../components/Login/LoginForm';
 
 class LoginContainer extends React.Component {
 
-  /**
-   * Class constructor.
-   */
   constructor(props, context) {
     super(props, context);
 
-    const storedMessage = localStorage.getItem('successMessage');
-    let successMessage = '';
-
-    if (storedMessage) {
-      successMessage = storedMessage;
-      localStorage.removeItem('successMessage');
-    }
-
-    // set the initial component state
     this.state = {
       errors: {},
-      successMessage,
       user: {
         email: '',
         password: '',
@@ -33,11 +20,6 @@ class LoginContainer extends React.Component {
     this.changeUser = this.changeUser.bind(this);
   }
 
-  /**
-   * Process the form.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   processForm(event) {
     event.preventDefault();
 
@@ -83,11 +65,6 @@ class LoginContainer extends React.Component {
     xhr.send(httpMessage);
   }
 
-  /**
-   * Change the user object.
-   *
-   * @param {object} event - the JavaScript event object
-   */
   changeUser(event) {
     const field = event.target.name;
     const user = this.state.user;
@@ -98,9 +75,6 @@ class LoginContainer extends React.Component {
     });
   }
 
-  /**
-   * Render the component.
-   */
   render() {
     return (
       <LoginForm

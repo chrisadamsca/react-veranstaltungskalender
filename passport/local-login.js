@@ -43,6 +43,7 @@ module.exports = new PassportLocalStrategy({
         name: user.name,
         email: user.email,
         desc: user.description,
+        image: user.image,
       };
 
       return done(null, token, data);
