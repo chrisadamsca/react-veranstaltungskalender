@@ -113,16 +113,16 @@ export default class Events extends Component {
   render() {
     return (
       <div className='app-body'>
+      
+        <div className='card-container'>
+          <h1 className='cardsHeader'>Deine Events:</h1>
+          <UserEventListContainer events={ this.state.activeEvents } cancelEvent={ this.cancelEvent } />
+        </div>
 
-      <div className='card-container'>
-        <h1 className='cardsHeader'>Deine Events:</h1>
-        <UserEventListContainer events={ this.state.activeEvents } cancelEvent={ this.cancelEvent } />
-      </div>
-
-      <div className='card-container'>
-        <h1 className='cardsHeader'>Andere Events:</h1>
-        <OtherEventListContainer events={ this.state.possibleEvents } attendEvent={ this.attendEvent } />
-      </div>
+        <div className='card-container'>
+          <h1 className='cardsHeader'>Andere Events:</h1>
+          <OtherEventListContainer events={ this.state.possibleEvents } attendEvent={ this.attendEvent } />
+        </div>
 
         <Link to='/eventserstellen' activeClassName='active'>
           <FloatingActionButton className='floatingButton'>
