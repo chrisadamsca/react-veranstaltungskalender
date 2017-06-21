@@ -11,7 +11,7 @@ app.set('port', 3000);
 // providing static files
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'dist')));
-app.use(express.static('public2'))
+app.use(express.static('public2'));
 app.use(express.static(path.join(__dirname, 'resources')));
 // app.use(express.static(path.join(__dirname, 'resources')));
 
