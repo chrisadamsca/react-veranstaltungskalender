@@ -4,7 +4,6 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import UserEventListContainer from '../../containers/Events/UserEventsContainer';
-import AllEventListContainer from '../../containers/Events/AllEventsContainer';
 import OtherEventListContainer from '../../containers/Events/OtherEventsContainer';
 import Auth from '../../modules/Auth';
 
@@ -112,36 +111,25 @@ export default class Events extends Component {
   }
 
   render() {
-    if (Auth.isUserAuthenticated()) {
-      return (
-        <div className='app-body'>
+    return (
+      <div className='app-body'>
 
-        <div className='card-container'>
-          <h1 className='cardsHeader'>Deine Events:</h1>
-          <UserEventListContainer events={ this.state.activeEvents } cancelEvent={ this.cancelEvent } />
-        </div>
+      <div className='card-container'>
+        <h1 className='cardsHeader'>Deine Events:</h1>
+        <UserEventListContainer events={ this.state.activeEvents } cancelEvent={ this.cancelEvent } />
+      </div>
 
-        <div className='card-container'>
-          <h1 className='cardsHeader'>Andere Events:</h1>
-          <OtherEventListContainer events={ this.state.possibleEvents } attendEvent={ this.attendEvent } />
-        </div>
+      <div className='card-container'>
+        <h1 className='cardsHeader'>Andere Events:</h1>
+        <OtherEventListContainer events={ this.state.possibleEvents } attendEvent={ this.attendEvent } />
+      </div>
 
-          <Link to='/eventserstellen' activeClassName='active'>
-            <FloatingActionButton className='floatingButton'>
-              <ContentAdd />
-            </FloatingActionButton>
-          </Link>
-        </div>
-      );
-    } else {
-      return (
-        <div className='app-body'>
-          <div className='card-container'>
-            <h1 className='cardsHeader'>Alle Events:</h1>
-            <AllEventListContainer />
-          </div>
-        </div>
-      );
-    }
+        <Link to='/eventserstellen' activeClassName='active'>
+          <FloatingActionButton className='floatingButton'>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Link>
+      </div>
+    );
   }
 }
