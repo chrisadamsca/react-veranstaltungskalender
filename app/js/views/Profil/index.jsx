@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import Avatar from 'material-ui/Avatar';
 
 class Profil extends React.Component {
   render() {
@@ -8,10 +9,10 @@ class Profil extends React.Component {
       currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
     return (
-      <div>
-        <h1>Mein Profil: </h1>
-        <h2>Name: { currentUser.name }</h2>
-        <p>E-Mail: { currentUser.email }</p>
+      <div className='loggedProfile'>
+        <Avatar src='{ currentUser.image }' />
+        <h1>{ currentUser.name }</h1>
+        <p>{ currentUser.email }</p>
         <Link to='/logout'>Ausloggen</Link>
       </div>
     );
