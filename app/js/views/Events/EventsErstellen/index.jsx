@@ -78,9 +78,6 @@ export default class EventErstellen extends Component {
       httpMessage += '&gId[' + i + ']=' + groupsSelected[i];
     }
 
-    console.log(httpMessage);
-    console.log(datetime);
-    console.log(new Date(datetime));
     // AJAX-Request
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/api/event');
