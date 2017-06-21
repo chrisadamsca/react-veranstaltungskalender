@@ -7,8 +7,9 @@ const UserEventList = ({ events, cancelEvent }) => (
   <div className='cards'>
     {events.map(event => (
       <Card key={ event._id } className='card'>
-        <CardTitle title={ event.name } />
-        <CardText>{ event.description }</CardText>
+        <CardTitle style={ { paddingBottom: '0px' } } title={ event.name } />
+        <CardText style={ { paddingTop: '0px', color: 'rgba(0, 0, 0, 0.54)', fontWeight: '100' } }>{ event.date.slice(0, -8).replace('T', ' ') }</CardText>
+        <CardText style={ { fontWeight: '400' } }>{ event.description }</CardText>
         <IconButton onTouchTap={ () => cancelEvent(event._id) } >
           <FontIcon className='material-icons'>clear</FontIcon>
         </IconButton>
