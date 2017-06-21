@@ -19,7 +19,7 @@ module.exports.createNewGroup = (req, res) => {
     events: [],
   });
   newGroup.save((err) => {
-    if (err) return console.error(err);
+    if (err) return winston.log('error', err);
     User.update({ _id: data.owner }, { $addToSet: { groups: (newGroup._id.toString()) } }, (er) => {
       if (er) {
         res.status(400).send('User nicht gefunden');
@@ -34,7 +34,7 @@ module.exports.createNewGroup = (req, res) => {
 // returns all groups
 module.exports.getAllGroups = (req, res) => {
   Group.find((err, groups) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
     res.status(200).send(groups);
     return null;
   });
@@ -45,7 +45,7 @@ module.exports.getAllGroups = (req, res) => {
 module.exports.returnAllButUserGroups = (req, res) => {
   const data = req.params;
   Group.find((err, groups) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
     User.findById((data.userId), (error, user) => {
       for (let i = 0; i < groups.length; i += 1) {
         for (let j = 0; j < user.groups.length; j += 1) {
