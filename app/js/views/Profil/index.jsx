@@ -13,7 +13,6 @@ class Profil extends React.Component {
 
     let imgURL = window.location.origin;
     imgURL += '/'+currentUser.image;
-    console.log(imgURL);
 
     return (
       <Card>
@@ -23,7 +22,6 @@ class Profil extends React.Component {
             <h1>{ currentUser.name }</h1>
             <p>{ currentUser.email }</p>
             <p>{ currentUser.desc }</p>
-
           </div>
         </CardText>
       </Card>
