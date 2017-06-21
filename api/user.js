@@ -118,6 +118,16 @@ module.exports.updateUser = (req, res) => {
                 if (er) res.status(400).send('User Hier nicht gefunden');
                 else res.status(200).send('Gruppe erfolgreich entfernt');
               });
+          for (let i = 0; i < group.events.length; i += 1) {
+            User.findByIdAndUpdate(dates.userId,
+              { $pull: { possibleEvents: (group.events[i]) } }, (er) => {
+                if (er) winston.log('error', err);
+              });
+            User.findByIdAndUpdate(dates.userId,
+              { $pull: { activeEvents: (group.events[i]) } }, (er) => {
+                if (er) winston.log('error', err);
+              });
+          }
         } else {
           Group.update({ _id: data.gId },
               { $addToSet: { users: (dates.userId) } }, (er) => {
