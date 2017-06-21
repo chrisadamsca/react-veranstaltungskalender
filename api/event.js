@@ -3,12 +3,13 @@ const Group = require('../models/groups');
 const User = require('../models/user');
 const winston = require('winston');
 
+
 module.exports.createNewEvent = (req, res) => {
   const data = req.body;
 
   if (data === undefined || data.length === 0) {
-    winston.log('error', 'Fehler beim Event erstellen: Keine daten gesendet');
-    res.status(400).send('Es wurden keine Daten gesendet');
+    // res.status(400).send('Es wurden keine Daten gesendet');
+    winston.log('error', 'lel');
     return;
   }
 
@@ -16,50 +17,32 @@ module.exports.createNewEvent = (req, res) => {
     name: data.name,
     description: data.description,
     location: data.location,
-    date: data.date,
+    date: new Date(data.datetime),
     groups: data.gId,
-    owner: data.owner,
   });
   for (let i = 0; i < data.gId.length; i += 1) {
     Group.update({ _id: data.gId[i] },
       { $addToSet: { events: (newEvent._id.toString()) } }, (error) => {
-        if (error) winston.log('errior', 'Fehler beim Event-zu-Gruppen-Hinzufügen: Gruppe nicht gefunden');
+        if (error) winston.log('error', error);
       });
     Group.findById(data.gId[i], (err, group) => {
       for (let j = 0; j < group.users.length; j += 1) {
-        if (group.users[j] !== newEvent.owner) {
-          User.update({ _id: group.users[j] },
-            { $addToSet: { possibleEvents: (newEvent._id.toString()) } }, (er) => {
-              if (er) winston.log('error', 'Fehler beim Event-zu-Nutzer-Hinzufügen: Nutzer nicht gefunden');
-            });
-        }
+        User.update({ _id: group.users[j] },
+          { $addToSet: { events: (newEvent._id.toString()) } }, (er) => {
+            if (er) winston.log('error', er);
+          });
       }
     });
   }
-  User.findByIdAndUpdate(newEvent.owner,
-    { $addToSet: { activeEvents: (newEvent._id.toString()) } }, (err) => {
-      if (err) winston.log('error', 'Fehler beim Aktivieren des Events bei Owner');
-    });
-    // User.findByIdAndUpdate(newEvent.owner,
-    //   { $pull: { possibleEvents: (newEvent._id.toString()) } }, (err) => {
-    //     if (err) winston.log('error', 'Fehler beim Aktivieren des Events bei Owner');
-    //   });
-
   newEvent.save((err) => {
-    if (err) {
-      winston.log('error', 'Event konnte nicht gespeichert werden.');
-      res.status(400).send('Event konnte nicht erstellt werden');
-    }
+    if (err) winston.log('error', err);
   });
-  res.status(200).send('Event erstellt!');
+  res.status(200).send('Event created!');
 };
 
 module.exports.getAllEvents = (req, res) => {
   Event.find((err, events) => {
-    if (err) {
-      winston.log('error', 'konnte keine Events finden');
-      res.status(200).send([]);
-    }
+    if (err) return winston.log('error', err);
     res.status(200).send(events);
     return null;
   });
@@ -184,18 +167,8 @@ module.exports.deleteEvent = (req, res) => {
               if (erro) res.status(400).send('Gruppe konnte nicht gefunden werden');
               for (let j = 0; j < group.users.length; j += 1) {
                 User.update({ _id: group.users[j] },
-                { $pull: { activeEvents: data.eventId } }, (error) => {
-                  if (error) {
-                    winston.log('error', 'Fehler beim Event löschen: Konnte keinen Nutzer finden');
-                    res.status(400).send('Konnte keinen Nutzer finden');
-                  }
-                });
-                User.update({ _id: group.users[j] },
-                { $pull: { possibleEvents: data.eventId } }, (error) => {
-                  if (error) {
-                    winston.log('error', 'Konnte keinen Nutzer finden');
-                    res.status(400).send('Konnte keinen Nutzer finden');
-                  }
+                { $pull: { events: data.eventId } }, (error) => {
+                  if (error) res.status(400).send('Event nicht gefunden');
                   return null;
                 });
               }
