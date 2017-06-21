@@ -1,12 +1,13 @@
 const User = require('../models/user');
 const Group = require('../models/groups');
 const Event = require('../models/events');
+const winston = require('winston');
 
 // Create User
 module.exports.createUser = (req, res) => {
   const data = req.body;
-  console.log(data);
   if (data === undefined || data.length === 0) {
+    winston.log('error', 'Fehler beim Nutzer erstellen: Es wurden keine Daten gesendet.');
     res.status(400).send('Es wurden keine Daten gesendet');
     return;
   }
@@ -21,7 +22,10 @@ module.exports.createUser = (req, res) => {
     activeEvents: [],
   });
   newUser.save((err) => {
-    if (err) return console.error(err);
+    if (err) {
+      winston.log();
+      res.status(400).send('User konnte nicht erstellt werden');
+    }
     res.status(200).send('User erstellt!');
     return null;
   });
@@ -70,7 +74,6 @@ module.exports.getUser = (req, res) => {
         possibleEvents: returnPossibleEvents,
       };
       res.status(200).send(returnValue);
-      return null;
     }, 100);
   });
 };
@@ -369,12 +372,12 @@ module.exports.fillDb = (req, res) => {
   newGroup2.events.push(newEvent1._id.toString());
   newGroup2.events.push(newEvent3._id.toString());
 
-  newUser1.possibleEvents.push(newEvent2._id.toString());
+  newUser1.possibleEvents.push(newEvent1._id.toString());
   newUser1.possibleEvents.push(newEvent3._id.toString());
   newUser2.possibleEvents.push(newEvent1._id.toString());
   newUser2.possibleEvents.push(newEvent2._id.toString());
   newUser2.possibleEvents.push(newEvent3._id.toString());
-  newUser3.possibleEvents.push(newEvent1._id.toString());
+  newUser3.possibleEvents.push(newEvent2._id.toString());
   newUser3.possibleEvents.push(newEvent3._id.toString());
   res.send('done filling');
 };
