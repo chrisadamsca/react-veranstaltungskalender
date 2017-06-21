@@ -16,11 +16,10 @@ const routes = {
 
     {
       path: '/',
-      getComponent: (location, callback) => {
-        if (Auth.isUserAuthenticated()) {
-          callback(null, Events);
-        } else {
-          callback(null, Events);
+      component: Events,
+      onEnter: (nextState, replace) => {
+        if (!Auth.isUserAuthenticated()) {
+          replace('/login');
         }
       },
     },
@@ -36,6 +35,11 @@ const routes = {
     {
       path: '/gruppen',
       component: Gruppen,
+      onEnter: (nextState, replace) => {
+        if (!Auth.isUserAuthenticated()) {
+          replace('/login');
+        }
+      },
     },
     {
       path: '/gruppeerstellen',
@@ -48,11 +52,10 @@ const routes = {
     },
     {
       path: '/profil',
-      getComponent: (location, callback) => {
-        if (Auth.isUserAuthenticated()) {
-          callback(null, Profil);
-        } else {
-          callback(null, Login);
+      component: Profil,
+      onEnter: (nextState, replace) => {
+        if (!Auth.isUserAuthenticated()) {
+          replace('/login');
         }
       },
     },
