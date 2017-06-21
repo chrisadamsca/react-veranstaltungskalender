@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Card, CardText } from 'material-ui/Card';
 import UserEventList from '../../components/Events/UserEvents';
 
 export default class UserEventListContainer extends Component {
@@ -7,8 +8,15 @@ export default class UserEventListContainer extends Component {
   }
 
   render() {
+    if (this.props.events.length > 0) {
+      return (
+        <UserEventList events={ this.props.events } cancelEvent={ this.props.cancelEvent } />
+      );
+    }
     return (
-      <UserEventList events={ this.props.events } cancelEvent={ this.props.cancelEvent } />
-    );
+      <Card key='noUserEvents' className='card'>
+        <CardText>Du nimmst an keinen Events teil.</CardText>
+      </Card>
+    )
   }
 }

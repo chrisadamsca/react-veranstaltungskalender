@@ -32,8 +32,6 @@ export default class Events extends Component {
           activeEvents: res.activeEvents,
           possibleEvents: res.possibleEvents,
         });
-
-        console.log(res.possibleEvents);
       }
     });
 
@@ -113,7 +111,7 @@ export default class Events extends Component {
   render() {
     return (
       <div className='app-body'>
-      
+
         <div className='card-container'>
           <h1 className='cardsHeader'>Deine Events:</h1>
           <UserEventListContainer events={ this.state.activeEvents } cancelEvent={ this.cancelEvent } />
