@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentAdd from 'material-ui/svg-icons/social/group-add';
 
 import UserGroupsContainer from '../../containers/Groups/UserGroupsContainer';
 import OtherGroupsContainer from '../../containers/Groups/OtherGroupsContainer';

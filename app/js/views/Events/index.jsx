@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentAdd from 'material-ui/svg-icons/action/event';
 
 import UserEventListContainer from '../../containers/Events/UserEventsContainer';
 import OtherEventListContainer from '../../containers/Events/OtherEventsContainer';
