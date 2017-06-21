@@ -19,6 +19,7 @@ module.exports.createNewEvent = (req, res) => {
     location: data.location,
     date: new Date(data.datetime),
     groups: data.gId,
+    owner: data.owner,
   });
   for (let i = 0; i < data.gId.length; i += 1) {
     Group.update({ _id: data.gId[i] },
@@ -27,10 +28,17 @@ module.exports.createNewEvent = (req, res) => {
       });
     Group.findById(data.gId[i], (err, group) => {
       for (let j = 0; j < group.users.length; j += 1) {
-        User.update({ _id: group.users[j] },
-          { $addToSet: { events: (newEvent._id.toString()) } }, (er) => {
-            if (er) winston.log('error', er);
-          });
+        if (group.users[j] !== newEvent.owner) {
+          User.update({ _id: group.users[j] },
+            { $addToSet: { possibleEvents: (newEvent._id.toString()) } }, (er) => {
+              if (er) winston.log('error', er);
+            });
+        } else {
+          User.update({ _id: group.users[j] },
+            { $addToSet: { activeEvents: (newEvent._id.toString()) } }, (er) => {
+              if (er) winston.log('error', er);
+            });
+        }
       }
     });
   }
