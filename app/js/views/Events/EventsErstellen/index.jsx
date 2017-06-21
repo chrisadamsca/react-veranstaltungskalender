@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'material-ui/Card';
+import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
 import { browserHistory } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -16,13 +18,17 @@ export default class EventErstellen extends Component {
       eventState: {
         name: '',
         desc: '',
-        groups: []
+        groups: [],
+        date: {},
+        time: {},
       },
       allGroups: [],
     };
 
     this.submitForm = this.submitForm.bind(this);
     this.changeInput = this.changeInput.bind(this);
+    this.handleTime = this.handleTime.bind(this);
+    this.handleDate = this.handleDate.bind(this);
   }
 
   componentDidMount() {
@@ -59,7 +65,10 @@ export default class EventErstellen extends Component {
     const eventDesc = encodeURIComponent(this.state.eventState.desc);
     const groupsSelected = this.state.eventState.groups
     const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
-    let httpMessage = 'name=' + eventName + '&description=' + eventDesc + '&owner=' + userID;
+    const date = this.state.eventState.date;
+    const time = this.state.eventState.time;
+    const datetime = date.getYear() + '-' + date.getMonth() + '-' + date.getDay() + 'T' + time.getHours() + ':' + time.getMinutes() + ':00Z';
+    let httpMessage = 'name=' + eventName + '&description=' + eventDesc + '&owner=' + userID + '&datetime=' + datetime;
     //httpmessage mit gruppen aufüllen
     for (let i=0; i<groupsSelected.length; i++) {
       httpMessage += '&gId[' + i + ']=' + groupsSelected[i];
@@ -112,6 +121,24 @@ export default class EventErstellen extends Component {
     });
   }
 
+  handleTime(event, time){
+    var eventState = this.state.eventState;
+    eventState.time = time;
+
+    this.setState({
+      eventState: eventState
+    });
+  }
+
+  handleDate(event, date){
+    var eventState = this.state.eventState;
+    eventState.date = date;
+
+    this.setState({
+      eventState: eventState
+    });
+  }
+
   menuItems(values) {
     return this.state.allGroups.map((group) => (
       <MenuItem
@@ -142,6 +169,21 @@ export default class EventErstellen extends Component {
                 onChange={ this.changeInput }
                 value={ this.state.eventState.name }
               />
+              <DatePicker
+                name="date"
+                hintText="Datum"
+                onChange={ this.handleDate }
+                value={ this.state.eventState.date }
+              />
+              <TimePicker
+                name="time"
+                format="24hr"
+                hintText="Uhrzeit"
+                autoOk={true}
+                onChange={ this.handleTime }
+                value={ this.state.eventState.time }
+              />
+
               <TextField
                 hintText='Beschreibung'
                 name='desc'
