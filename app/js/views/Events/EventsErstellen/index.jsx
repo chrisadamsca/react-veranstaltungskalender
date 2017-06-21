@@ -67,13 +67,20 @@ export default class EventErstellen extends Component {
     const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
     const date = this.state.eventState.date;
     const time = this.state.eventState.time;
-    const datetime = date.getYear() + '-' + date.getMonth() + '-' + date.getDay() + 'T' + time.getHours() + ':' + time.getMinutes() + ':00Z';
+    let month = '' + (date.getMonth() + 1);
+    let day = '' + date.getDate();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    const datetime = date.getFullYear() + '-' + month + '-' + day + 'T' + time.getHours() + ':' + time.getMinutes() + ':00Z';
     let httpMessage = 'name=' + eventName + '&description=' + eventDesc + '&owner=' + userID + '&datetime=' + datetime;
     //httpmessage mit gruppen aufüllen
     for (let i=0; i<groupsSelected.length; i++) {
       httpMessage += '&gId[' + i + ']=' + groupsSelected[i];
     }
 
+    console.log(httpMessage);
+    console.log(datetime);
+    console.log(new Date(datetime));
     // AJAX-Request
     const xhr = new XMLHttpRequest();
     xhr.open('post', '/api/event');
