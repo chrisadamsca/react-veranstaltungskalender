@@ -8,7 +8,7 @@ const OtherGroups = ({ enterGroup, groups }) => (
     {groups.map(group => (
       <Card key={ group._id } className='card'>
         <CardTitle title={ group.name } />
-        <CardText>{ group.description }</CardText>
+        <CardText style={ { fontWeight: '400' } }>{ group.description }</CardText>
         <IconButton onTouchTap={ () => enterGroup(group._id) } >
           <FontIcon className='material-icons'>add_box</FontIcon>
         </IconButton>
