@@ -140,7 +140,7 @@ module.exports.updateUser = (req, res) => {
           for (let i = 0; i < group.events.length; i += 1) {
             User.update({ _id: dates.userId },
               { $addToSet: { possibleEvents: (group.events[i]) } }, (er) => {
-                if (er) console.error(er);
+                if (er) winston.log('error', er);
               });
           }
           User.update({ _id: dates.userId }, { $addToSet: { groups: (data.gId) } }, (er) => {
@@ -263,13 +263,13 @@ module.exports.loginUser = (req, res) => {
 // Empty Database (only for testing and demonstration)
 module.exports.emptyDb = (req, res) => {
   User.remove({}, (err) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
   });
   Group.remove({}, (err) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
   });
   Event.remove({}, (err) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
   });
 
   res.send('done eptying');
@@ -288,7 +288,7 @@ module.exports.fillDb = (req, res) => {
     activeEvents: [],
   });
   newUser1.save((err) => {
-    if (err) return console.error(err);
+    if (err) return winston.log('error', err);
     return null;
   });
 
@@ -303,7 +303,7 @@ module.exports.fillDb = (req, res) => {
     activeEvents: [],
   });
   newUser2.save((err) => {
-    if (err) return console.error(err);
+    if (err) winston.log('error', (err));
     return null;
   });
 
@@ -318,7 +318,7 @@ module.exports.fillDb = (req, res) => {
     activeEvents: [],
   });
   newUser3.save((err) => {
-    if (err) return console.error(err);
+    if (err) return winston.log('error', err);
     return null;
   });
 
@@ -330,7 +330,7 @@ module.exports.fillDb = (req, res) => {
     events: [],
   });
   newGroup1.save((err) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
   });
 
   const newGroup2 = new Group({
@@ -341,7 +341,7 @@ module.exports.fillDb = (req, res) => {
     events: [],
   });
   newGroup2.save((err) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
   });
 
   const newEvent1 = new Event({
@@ -352,7 +352,7 @@ module.exports.fillDb = (req, res) => {
     groups: [newGroup2._id.toString()],
   });
   newEvent1.save((err) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
   });
 
   const newEvent2 = new Event({
@@ -363,7 +363,7 @@ module.exports.fillDb = (req, res) => {
     groups: [newGroup1._id.toString()],
   });
   newEvent2.save((err) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
   });
 
   const newEvent3 = new Event({
@@ -374,7 +374,7 @@ module.exports.fillDb = (req, res) => {
     groups: [newGroup1._id.toString(), newGroup2._id.toString()],
   });
   newEvent3.save((err) => {
-    if (err) console.error(err);
+    if (err) winston.log('error', err);
   });
 
   newUser1.groups.push(newGroup2._id.toString());

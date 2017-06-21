@@ -3,6 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const winston = require('winston');
 
 const app = express();
 
@@ -23,7 +24,7 @@ const mongodb = mongoose.connection;
 
 const server = app.listen(app.get('port'), () => {
   const port = server.address().port;
-  console.log('Example app listening on port 3000!');
+  winston.log('log', 'Example app listening on port 3000!');
 });
 
 // Mongo-DB setup
@@ -31,7 +32,7 @@ mongoose.connect('mongodb://db:27017/users');
 
 mongodb.on('error', console.error.bind(console, 'connection error:'));
 mongodb.once('open', () => {
-  console.log('connection to mongodb established');
+  winston.log('log', 'connection to mongodb established');
 });
 
 // pass the passport middleware
