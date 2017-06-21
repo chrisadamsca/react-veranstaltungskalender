@@ -26,9 +26,11 @@ export default class EventErstellen extends Component {
   }
 
   componentDidMount() {
-    //Get all groups and push into names
+    //Get all groups from current user and push into names
     const req = new XMLHttpRequest();
-    req.open('GET', '/api/group', true);
+    const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
+
+    req.open('GET', '/api/user/' + userID, true);
     req.responseType = 'json';
 
     req.onload = () => {
@@ -36,7 +38,7 @@ export default class EventErstellen extends Component {
         // Success!
         const res = req.response;
         this.setState({
-          allGroups: res,
+          allGroups: res.groups,
         });
       } else {
         // We reached our target server, but it returned an error
@@ -57,7 +59,7 @@ export default class EventErstellen extends Component {
     const eventDesc = encodeURIComponent(this.state.eventState.desc);
     const groupsSelected = this.state.eventState.groups
     const userID = JSON.parse(localStorage.getItem('currentUser')).userID;
-    let httpMessage = 'name=' + eventName + '&description=' + eventDesc;
+    let httpMessage = 'name=' + eventName + '&description=' + eventDesc + '&owner=' + userID;
     //httpmessage mit gruppen aufüllen
     for (let i=0; i<groupsSelected.length; i++) {
       httpMessage += '&gId[' + i + ']=' + groupsSelected[i];
