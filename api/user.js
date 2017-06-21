@@ -3,6 +3,7 @@ const Group = require('../models/groups');
 const Event = require('../models/events');
 const winston = require('winston');
 
+winston.level = 'debug';
 // Create User
 module.exports.createUser = (req, res) => {
   const data = req.body;
@@ -17,6 +18,7 @@ module.exports.createUser = (req, res) => {
     email: data.email,
     description: ' ',
     password: data.password,
+    image: './userImage/avatar.jpeg',
     groups: [],
     possibleEvents: [],
     activeEvents: [],

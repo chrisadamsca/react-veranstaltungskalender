@@ -1,6 +1,9 @@
 const Group = require('../models/groups');
 const User = require('../models/user');
 const Event = require('../models/events');
+const winston = require('winston');
+
+winston.level = 'debug';
 
 module.exports.createNewGroup = (req, res) => {
   const data = req.body;
