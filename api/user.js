@@ -344,6 +344,17 @@ module.exports.fillDb = (req, res) => {
     if (err) winston.log('error', err);
   });
 
+  const newGroup3 = new Group({
+    name: 'Mobile Web Application',
+    description: 'Sehr spannende Veranstaltung',
+    image: 'anotherFile.png',
+    users: [newUser3._id.toString()],
+    events: [],
+  });
+  newGroup3.save((err) => {
+    if (err) winston.log('error', err);
+  });
+
   const newEvent1 = new Event({
     name: 'MediaNight',
     description: 'Tolle Veranstaltung',
