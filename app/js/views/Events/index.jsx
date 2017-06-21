@@ -28,9 +28,20 @@ export default class Events extends Component {
       if (req.status === 200) {
         // Success!
         const res = req.response;
+        const activeEvents = res.activeEvents;
+        const possibleEvents = res.possibleEvents;
+
+        activeEvents.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
+
+        possibleEvents.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
+
         this.setState({
-          activeEvents: res.activeEvents,
-          possibleEvents: res.possibleEvents,
+          activeEvents: activeEvents,
+          possibleEvents: possibleEvents,
         });
       }
     });
@@ -63,6 +74,14 @@ export default class Events extends Component {
         const transferEvent = possibleEvents[index];
         possibleEvents.splice(index, 1);
         activeEvents.push(transferEvent);
+
+        activeEvents.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
+
+        possibleEvents.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
 
         this.setState({
           activeEvents: activeEvents,
@@ -98,6 +117,14 @@ export default class Events extends Component {
         const transferEvent = activeEvents[index];
         activeEvents.splice(index, 1);
         possibleEvents.push(transferEvent);
+
+        activeEvents.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
+
+        possibleEvents.sort((a, b) => {
+          return new Date(a.date) - new Date(b.date);
+        });
 
         this.setState({
           activeEvents: activeEvents,
