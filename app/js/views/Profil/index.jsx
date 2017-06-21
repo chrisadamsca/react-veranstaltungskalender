@@ -19,7 +19,7 @@ class Profil extends React.Component {
       <Card>
         <CardText>
           <div className='loggedProfile'>
-            <Avatar size='150' src={ imgURL } />
+            <Avatar size={ 150 } src={ imgURL } />
             <h1>{ currentUser.name }</h1>
             <p>{ currentUser.email }</p>
             <p>{ currentUser.desc }</p>
